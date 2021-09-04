@@ -1,0 +1,35 @@
+﻿
+nav.navbar .brand-text.visible {
+    display: block;
+}
+
+nav.navbar .brand-text {
+    display: none;
+    font-weight: 700;
+}
+
+.text-uppercase {
+    letter-spacing: 0.1em;
+}
+.text-primary {
+    color: #DB6574 !important;
+}
+i, span, strong {
+    display: inline-block;
+}
+nav.navbar {
+    background: #2d3035;
+    color: #8a8d93;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #34373d;
+    z-index: 10;
+}
+    nav.navbar a {
+        font-family: "Muli", sans-serif;
+        color: inherit;
+    }
+    nav.navbar a:hover {
+
+        color: White;
+    }

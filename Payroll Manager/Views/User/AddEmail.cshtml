@@ -1,0 +1,48 @@
+﻿@using Payroll_Manager.Models;
+@model EmailSendViewModel
+@{
+    var message = ViewBag.SuccessMsg;
+}
+<div id="buy-ticket-modal" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p id ="abc"></p>
+                <h4 class="modal-title">Buy Tickets</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddEmail", "User", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="tensanpham" name="Name" placeholder="Your Name" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="emailsanpham" name="Email" placeholder="Your Email" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="dienthoaisanpham" name="Phone" placeholder="Your Phone" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="soluongsanpham" name="Quatity" placeholder="Quantity" required="">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InventoriesId">Choose Ticket</label>
+                        <select asp-for="InventoriesId" class="form-control" asp-items="ViewBag.Addresses" required="">
+                            <option value="" selected disabled>--- Select Ticket ---</option>
+                        </select>
+                        <span asp-validation-for="InventoriesId" class="text-danger"></span>
+                    </div>
+                    <div class="text-center">
+                        <input class="btn" type="button" value="Mua ngay" id="buttonDemo4" />
+                    </div>
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+@section Scripts{
+
+}

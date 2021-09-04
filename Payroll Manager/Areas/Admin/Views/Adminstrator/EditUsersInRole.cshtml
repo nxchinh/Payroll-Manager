@@ -1,0 +1,32 @@
+﻿@model List<Payroll_Manager.Areas.Admin.Models.VM_DoanhNghiep.UserRoleViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    ViewData["Title"] = "Sửa quyền truy cập";
+    var roleId = ViewBag.roleId;
+}
+    <link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+<form method="post">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="header-title mt-0 mb-3">Thêm hoặc xóa quyền truy cập</h4>
+        </div>
+        <div class="card-body">
+            @for (int i= 0; i < Model.Count; i++)
+            {
+            <div class="form-check m-1">
+                <input asp-for="@Model[i].UserId" type="hidden"/>
+                <input asp-for="@Model[i].UserName" type="hidden"/>
+                <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                    @Model[i].UserName
+                </label>
+            </div>
+            }
+        </div>
+        <div class="card-footer text-muted">
+            <input type="submit" value="Submit" class="btn btn-outline-primary"/>
+            <a asp-action="EditRole" style="margin-left:10px;" class="btn btn-outline-danger" asp-route-id="@roleId">Cancel</a>
+        </div>
+    </div>
+
+</form>

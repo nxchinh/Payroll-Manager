@@ -1,0 +1,157 @@
+﻿@model Payroll_Manager.Areas.Admin.Controllers.SaleController.SoWithItems
+@using Payroll_Manager.Utilities
+@inject UserManager<Payroll_Manager.Persistence.ApplicationUser> _userManager
+<link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+<div class="page-content purchase">
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="float-right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">Menu</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">Danh sách thanh toán</a></li>
+                            <li class="breadcrumb-item active">Chi tiết</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title"><b>Chi tiết thanh toán theo mã thanh toán</b></h4>
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="wallet-bal-usd">
+                                    <h4 class="wallet-title m-0">Chi tiết thanh toán</h4>
+                                    <span class="text-muted font-12">Mã thanh toán : @Model.S.SaleId</span>
+                                    <h3 class="text-center">@Model.S.TotalSalePrice VNĐ</h3>
+                                </div>
+                                <p class="font-15 text-success text-center mb-4"> + Ngày: @Model.S.SaleDateString<span class="font-12 text-muted">(Đã thanh toán @Model.S.TotalSaleItems sản phẩm)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <ul class="list-group wallet-bal-crypto">
+                            <li class="list-group-item align-items-center d-flex justify-content-between">
+                                <div class="media">
+                                    <div class="media-body align-self-center">
+                                        <div class="coin-bal">
+                                            <h3 class="m-0">Nhân viên thực hiện</h3>
+                                            <p class="text-muted mb-0">@ViewBag.TenNhanVien</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item align-items-center d-flex justify-content-between">
+                                <div class="media">
+                                    <div class="media-body align-self-center">
+                                        <div class="coin-bal">
+                                            <h3 class="m-0">Khách hàng</h3>
+                                            <p class="text-muted mb-0">@ViewBag.TenKhachHang</p>
+                                        </div>
+                                    </div><!--end media body-->
+                                </div>
+                            </li>
+                        </ul>
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div><!--end col-->
+
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body btc-price" style="position: relative;">
+                        <div class="col-sm-12">
+                            <table id="datatable" class="table table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                                <thead class="thead-light">
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="No: activate to sort column descending" style="width: 27px;">Mã sản phẩm</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending">Tên sản phẩm</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Giá sản phẩm</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Transaction ID: activate to sort column ascending">Số lượng thanh toán</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Type: activate to sort column ascending">Tổng giá sản phẩm</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Type: activate to sort column ascending">Trạng thái</th>
+                                </tr><!--end tr-->
+                                </thead>
+
+                                <tbody>
+                                @foreach (var item in Model.ItemList)
+                                {
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1">
+                                            @Html.DisplayFor(modelItem => item.Inventory.ProductId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Inventory.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Inventory.SalePrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TotalSI)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TotalSiPrice)
+                                        </td>
+                                        <td>
+                                        @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()))
+                                        {
+                                            @if (item.Returned != 1)
+                                            {
+                                                @Html.ActionLink("Trả sản phẩm", "Return", "SaleItem", new {id = item.SaleItemId}, new {@class = "btn btn-outline-primary px-3"})
+                                            }
+                                            @if (item.Returned == 1)
+                                            {
+                                                <span class="badge badge-md badge-soft-danger">Returned</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-md badge-soft-danger">Access denied</span>
+                                        }
+
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div><!--end col-->
+        </div><!-- End row -->
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title mt-0 mb-3">Tool</h4>
+                        <p>
+                        @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()))
+                        {
+                            @if (@ViewBag.HoatDong.Equals("0"))
+                            {
+                                @Html.ActionLink("Xóa bỏ giao dịch", "ReturnTransaction", new {id = Model.S.SaleId}, new {@class = "btn btn-outline-danger px-3"})
+                            }
+                        }
+                        </p>
+                        <p>
+                            @Html.ActionLink("Trở về", "TransactionLookup","Sale",null, new { @class = "btn btn-outline-primary px-3" })
+                        </p>
+                        <p>
+                            @Html.ActionLink("Cancel", "Index","Sale",null, new { @class = "btn btn-outline-success px-3" })
+                        </p>
+                    </div>  <!--end card-body-->
+                </div><!--end card-->
+            </div><!--end col-->
+        </div><!--end row-->
+
+    </div><!-- container -->
+</div>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

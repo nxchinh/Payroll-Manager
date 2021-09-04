@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Payroll_Manager.Persistence.ApplicationUser> SignInManager
+@inject UserManager<Payroll_Manager.Persistence.ApplicationUser> UserManager
+
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            var data = await UserManager.FindByNameAsync(User.Identity.Name);
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="btn-group">
+
+                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                            <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
+                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                        </a>
+
+                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                            <button type="button" tabindex="0" class="dropdown-item">User Account</button>
+                            <button type="button" tabindex="0" class="dropdown-item">Settings</button>
+                            <div tabindex="-1" class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="widget-content-left  ml-3 header-user-info">
+                    <div class="widget-heading">
+                        Chào mừng , @data.FirstName @data.LastName
+                    </div>
+                    <div class="widget-subheading">
+                        @data.UserName
+                    </div>
+                </div>
+                <div class="widget-content-right header-user-info ml-3">
+                    <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
+                        <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                    </button>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a style="color: #d9534f; font-weight: 500;" class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        }

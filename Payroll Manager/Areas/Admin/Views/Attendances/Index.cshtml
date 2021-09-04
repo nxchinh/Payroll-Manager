@@ -1,0 +1,127 @@
+﻿@model List<Payroll_Manager.Entity.ModelForAttendance.Attendance>
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Payroll_Manager.Persistence.ApplicationUser> SignInManager
+@inject UserManager<Payroll_Manager.Persistence.ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Hệ thống điểm danh";
+    Layout = "~/Views/Shared/_Layout_A.cshtml";
+}
+@section Scripts
+{
+    <link href="~/Assets_Attendance/pmd-datatable.css" rel="stylesheet">
+
+    <link href="~/Assets_Attendance/select.dataTables.min.css" rel="stylesheet">
+    <!-- Datatable js -->
+    <script type="text/javascript" language="javascript" src="~/lib/materialize/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Datatable Bootstrap -->
+    <script type="text/javascript" language="javascript" src="~/lib/materialize/js/dataTables.bootstrap.js"></script>
+
+    <!-- Datatable responsive js-->
+    <script type="text/javascript" language="javascript" src="~/lib/materialize/js/dataTables.responsive.js"></script>
+
+    <!-- Datatable select js-->
+    <script type="text/javascript" language="javascript" src="~/lib/materialize/js/dataTables.select.js"></script>
+    <script src="@Url.Content("~/js/custom.js")"></script>
+}
+<h2>Index</h2>
+<form asp-action="Index">
+    @if (ViewBag.Message != null)
+    {
+        if (ViewBag.Message == "success")
+        {
+            <div role="alert" class="alert alert-success alert-dismissible">
+                <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+                Attendance Sheet successfully created
+            </div>
+        }
+    }
+    <div class="col-md-12 float-right">
+        <div class="btn-group float-right" role="group" aria-label="Basic example">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                var data = await UserManager.FindByNameAsync(User.Identity.Name);
+                <button type="button" class="btn btn-success" style="margin: 10px; padding: 10px;">Chào mừng , @data.FirstName @data.LastName</button>
+                <button style="margin: 10px; padding: 10px;" onclick="location.href='@Url.Action("Index", "Home", new { Area = "Admin" })'" type="button" class="btn btn-warning">Hệ thống</button>
+                <a style="margin: 10px; padding: 10px;" class="btn btn-danger" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-4 paddingTopMore" style="width: 330px;" id="btnSize">
+        <a asp-action="Index" class="btn pmd-tooltip pmd-ripple-effect btn-default" data-toggle="tooltip" data-placement="top" title="Refresh Full List"><i class="fa fa-list"></i>
+            <p>Full List</p></a>
+        <button type="submit" class="btn pmd-tooltip pmd-ripple-effect btn-primary" data-toggle="tooltip" data-placement="top" title="Select Date to Search">
+            <i class="fa fa-search"></i>
+            <p>Filter</p>
+        </button>
+        <div class="form-actions no-color" style="width: 300px;">
+            <p>
+                <!--Inline Datepicker -->
+                <div id="datepicker-inline" style="position: fixed;">
+                    <input type="hidden" class="form-control" id="datepicker-data" name="SearchString" value="@ViewData["SearchString"]">
+                </div>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-8 paddingTopMore">
+        <div class="pmd-card pmd-z-depth pmd-card-custom-view">
+            <table id="example" class="table pmd-table table-hover table-striped display responsive nowrap" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().AttendanceID)
+                    </th>
+
+                    <th>
+                        Tên
+                    </th>
+                    <th>
+                        Ngày điểm danh
+                    </th>
+                    <th>
+                        Tình trạng
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => m[i].AttendanceID)
+                            @Html.HiddenFor(m => m[i].AttendanceID)
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(m => m[i].Name)
+                            @Html.HiddenFor(m => m[i].Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m[i].Attendance_Date)
+                            @Html.HiddenFor(m => m[i].Attendance_Date)
+                        </td>
+                        <td>
+                            @if (Model[i].Attendance_status)
+                            {
+                                <label style="color: rgba(0, 150, 136, 0.89);">Có mặt</label>
+                            }
+                            else
+                            {
+                                <label style="color: #EA4961;">Vắng mặt</label>
+                            }
+
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@Model[i].AttendanceID">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@Model[i].AttendanceID">Delete</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,79 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Attendance Capture</title>
+
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/Assets_Attendance/Loader_style.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/Assets_Attendance/site.css" />
+        <link rel="stylesheet" href="~/Assets_Attendance/a.css" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="~/lib/materialize/css/propeller.css" />
+        <link href="~/Assets_Attendance/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="~/Assets_Attendance/responsive.bootstrap.min.css" rel="stylesheet">
+        <link href="~/Assets_Attendance/bootstrap-datetimepicker.css" rel="stylesheet">
+        <link href="~/Assets_Attendance/pmd-datetimepicker.css" rel="stylesheet">
+        <link href="~/Assets_Attendance/pmd-datatable.css" rel="stylesheet">
+        <link href="~/Assets_Attendance/select.dataTables.min.css" rel="stylesheet">
+    </environment>
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body>
+    <div id="divLoader" style="display:block;">
+        <div class="loader">
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__ball"></div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="Admin" asp-controller="Attendances" asp-action="Index" class="navbar-brand">Attendance</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Attendances" asp-action="Index">Attendance History</a></li>
+                    <li><a asp-area="" asp-controller="Users" asp-action="Index">Mark Attendance</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+    <environment names="Development,Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/materialize/js/propeller.js"></script>
+        <script type="text/javascript" src="~/lib/materialize/js/textfield.js"></script>
+        <script type="text/javascript" language="javascript" src="~/lib/materialize/js/moment-with-locales.js"></script>
+        <script type="text/javascript" language="javascript" src="~/lib/materialize/js/bootstrap-datetimepicker.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script type="text/javascript" language="javascript" src="~/lib/materialize/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" language="javascript" src="~/lib/materialize/js/dataTables.bootstrap.js"></script>
+        <script type="text/javascript" language="javascript" src="~/lib/materialize/js/dataTables.responsive.js"></script>
+        <script type="text/javascript" language="javascript" src="~/lib/materialize/js/dataTables.select.js"></script>
+        <script type="text/javascript" language="javascript" src="~/js/custom.js"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

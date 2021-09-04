@@ -1,0 +1,27 @@
+﻿@model List<Payroll_Manager.Areas.Admin.Models.ThongKeTheoThang>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }; }
+<div class="row">
+    <div class="col-md-12">
+
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Tháng </th>
+                    <th>Tổng đơn</th>
+                    <th>Tổng số doanh thu</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.OrderBy(x=>x.Thang))
+            {
+                <tr>
+                    <td>@item.Thang (@Months[item.Thang - 1])</td>
+                    <td>@item.Soluong</td>
+                    <td>@item.TongTien.ToString("#,##0").Replace(",", ".") đ</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

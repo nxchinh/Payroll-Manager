@@ -1,0 +1,84 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Category.CategoryDetailViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết loại vé";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href="/css/Animated.css" rel="stylesheet" type="text/css" />
+<link href="/css/Employee.css" rel="stylesheet" type="text/css" />
+<div class="col-md-12 grid-margin grid-margin-md-0">
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index">Danh sách loại</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Chi tiết loại</li>
+                </ol>
+            </nav><br /><br />
+            <div style="padding:30px" class="wrap d-flex justify-content-start justify-content-sm-center flex-wrap">
+                <div class="wrap align-items-center ml-5">
+                    <p class="font-weight-bold text-success" style="font-size:20px">Tên Loại: @Model.CategoryName</p>
+                    <p class="font-weight-normal"> Tổng cộng: @Model.Total</p>
+                    @if (Model.Active == 1)
+                    {
+                        <p style="text-align: center;padding:5px">                              
+                            <div class="mb-2 mr-2 badge badge-pill badge-primary">Trạng thái: Chuyển lên web</div>
+                        </p>
+                    }
+                    else if(Model.Active == 0)
+                    {
+                        <p style="text-align: center;padding:5px">
+                            <div class="mb-2 mr-2 badge badge-pill badge-danger">Trạng thái: Không</div>
+                        </p>
+                    }
+                    <br /><br />
+                    <p class="font-weight-bold"> Sản phẩm thuộc loại: </p>
+                    <hr style="background-color:crimson" />
+                    <table class="mb-0 table table-hover table-bordered desing">
+                        <tr>
+                            <td>Hình ảnh</td>
+                            <td>Tên</td>
+                            <td>Giá</td>
+                            <td>Ghi chú</td>
+                            <td>Trạng thái</td>
+                            <td>Update</td>
+                            <td>Delete/Restore</td>
+                        </tr>
+                        @foreach (var item in Model.Inventories)
+                        {
+                            @if (item.Active == 1)
+                            {
+                                <tr>
+                                    <td><img style="height:100px; width:100px;text-align: center;" src="~/Product_images/@item.Image" /></td>
+                                    <td style="text-align: center;">@item.Name</td>
+                                    <td style="text-align: center;">@item.NetPrice </td>
+                                    <td style="text-align: center;">@Html.Raw(item.Description)</td>
+                                    <td style="text-align: center;"><span class="baddge baddge-md baddge-soft-success">Using</span></td>
+                                    <td style="text-align: center;">@Html.ActionLink("Update", "Update", "Inventory", new { id = item.ProductId }, new { @class = "mb-2 mr-2 btn btn-info" })</td>
+                                    <td style="text-align: center;">@Html.ActionLink("Delete", "Delete", "Inventory", new { id = item.ProductId }, new { @class = "mb-2 mr-2 btn btn-danger" })</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td><img style="height:100px; width:100px;text-align: center;" src="~/Product_images/@item.Image" /></td>
+                                    <td style="text-align: center;">@item.Name</td>
+                                    <td style="text-align: center;">@item.NetPrice</td>
+                                    <td style="text-align: center;">@Html.Raw(item.Description)</td>
+                                    <td style="text-align: center;"><span class="baddge baddge-md baddge-soft-danger">Deleted</span></td>
+                                    <td style="text-align: center;">@Html.ActionLink("Update", "Update", "Inventory", new { id = item.ProductId },new { @class = "mb-2 mr-2 btn btn-info" })</td>
+                                    <td style="text-align: center;">@Html.ActionLink("Restore", "Restore", "Inventory", new { id = item.ProductId }, new { @class = "mb-2 mr-2 btn btn-warning" })</td>
+                                </tr>
+
+                            }
+                        }
+                    </table>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

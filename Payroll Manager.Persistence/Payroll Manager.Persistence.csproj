@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Payroll_Manager.Persistence</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200417083601_initial.cs" />
+    <Compile Remove="Migrations\20200417083601_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200514152728_updatemodelversion05142020_1.cs" />
+    <Compile Remove="Migrations\20200514152728_updatemodelversion05142020_1.Designer.cs" />
+    <Compile Remove="Migrations\20200703180822_update-model030720202.cs" />
+    <Compile Remove="Migrations\20200703180822_update-model030720202.Designer.cs" />
+    <Compile Remove="Migrations\20200703182510_update-model030720203.cs" />
+    <Compile Remove="Migrations\20200703182510_update-model030720203.Designer.cs" />
+    <Compile Remove="Migrations\20200704082429_update_model20200407.cs" />
+    <Compile Remove="Migrations\20200704082429_update_model20200407.Designer.cs" />
+    <Compile Remove="Migrations\20200704090949_update_model202004072.cs" />
+    <Compile Remove="Migrations\20200704090949_update_model202004072.Designer.cs" />
+    <Compile Remove="Migrations\20200706074853_updatemodel06072020.cs" />
+    <Compile Remove="Migrations\20200706074853_updatemodel06072020.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Payroll Manager.Entity\Payroll Manager.Entity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="Repository\Abstraction\" />
+  </ItemGroup>
+
+</Project>

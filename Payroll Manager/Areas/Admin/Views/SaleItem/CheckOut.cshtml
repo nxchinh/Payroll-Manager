@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Payroll_Manager.Entity.ModelForUser.SaleItem>
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{ 
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<link href="/css/Animated.css" rel="stylesheet" type="text/css" />
+<link href="/css/Employee.css" rel="stylesheet" type="text/css" />
+<div class="animated fadeIn employee">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <br />
+                <br />
+                <h4 class="mt-0 header-title">Xác nhận Thông tin thanh toán: Công ty EventNet</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="pro-order-box">
+                            <i class="mdi fas fa-train text-success"></i>
+                            <h4 class="header-title">Mã thanh toán</h4>
+                            <p class="text-muted mb-0">
+                                @Html.DisplayName(HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID").ToString())
+                            </p>
+                        </div>
+                    </div><!--end col-->
+                    <div class="col-md-4">
+                        <div class="pro-order-box">
+                            <i class="mdi fas fa-car text-danger"></i>
+                            <h4 class="header-title">Mã nhân viên thực hiện</h4>
+                            <p class="text-muted mb-0">
+                                @ViewBag.userEmail _ Quyền : @ViewBag.Role
+                            </p>
+                        </div>
+                    </div><!--end col-->
+                    <div class="col-md-4">
+                        <div class="pro-order-box">
+                            <i class="mdi fas fa-bus text-warning"></i>
+                            <h4 class="header-title">Mã khách hàng</h4>
+                            <p class="text-muted mb-0">
+                                @Html.DisplayName(HttpContextAccessor.HttpContext.Session.GetInt32("Current CustomerID").ToString())
+                            </p>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body btc-price" style="position: relative;">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="text-muted">Số lượng đang bán</span>
+                    <h3 class="mt-0">
+                        @if (Model.LastOrDefault()?.SaleId == HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID"))
+                        {
+            @Html.DisplayFor(model => model.LastOrDefault().Sale.TotalSaleItems)}
+                        @if (Model.LastOrDefault()?.SaleId != HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID"))
+                        {
+            @Html.DisplayName("0")}
+                    </h3>
+                </div>
+                <div class="col-md-4">
+                    <span class="text-muted">
+                        Tổng cộng (VNĐ)
+                    </span>
+                    <h3 class="mt-0">
+                        @if (Model.LastOrDefault()?.SaleId == HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID"))
+                        {
+            @Html.DisplayFor(model => model.LastOrDefault().Sale.TotalSalePrice)}
+                        @if (Model.LastOrDefault()?.SaleId != HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID"))
+                        {
+            @Html.DisplayName("0")}
+
+                    </h3>
+                </div>
+                <div class="col-md-4">
+                    @Html.ActionLink("Xác nhận", "TransactionLookup", "Sale", null, new { @class = "btn btn-gradient-success btn-sm px-3 float-right" })
+                    @Html.ActionLink("Xóa thanh toán", "Cancel", "Sale", new { id = Model.LastOrDefault().SaleId }, new { @class = "btn btn-gradient-primary btn-sm px-3 float-right" })
+                </div>
+            </div>
+
+        </div><!--end card-body-->
+    </div><!--end card-->
+</div>
+<script type="text/javascript">$("#Quantity").focus(function() {
+        $(this).val("0");
+    });</script>

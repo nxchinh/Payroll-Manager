@@ -1,0 +1,61 @@
+﻿.row-color{
+    background-color:#38b8e6;
+    color:#ffffff;
+}
+#dathang .form-group label{
+    margin-top:5px;
+}
+#dathang button{
+    margin-top:5px;
+    margin-bottom:5px;
+}
+#dathang .camera{
+    width:300px;
+    border: 1px solid;
+    margin:0 auto;
+}
+#InfoItem a > img {
+    position: absolute;
+    left: 10px;
+    top: 3px;
+    width: 70px;
+    height: 70px;
+}
+#InfoItem a {
+    position: relative;
+    padding: 12px 8px 8px 90px;
+    display: block;
+    min-height: 70px;
+    font-weight: 600;
+    border-bottom: 1px solid #f3f3f3;
+    
+}
+#InfoItem a h5{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: break-word;
+     white-space: nowrap;
+}
+.img-item {
+    display: inline-block !important;
+    width: 70px;
+    height: 70px;
+}
+.dataTables_filter {
+    text-align: right;
+}
+.form-control-new {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+        color: #646464;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+}
+#ListOrderSeach{
+    max-width:830px;
+}

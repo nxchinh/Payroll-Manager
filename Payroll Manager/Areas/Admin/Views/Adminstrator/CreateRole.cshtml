@@ -1,0 +1,39 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_DoanhNghiep.CreateRoleViewModel
+
+@{ 
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    ViewData["Title"] = "Thêm quyền";
+    }
+<link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+<div class="container-fluid">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h4 class="header-title mt-0 mb-3">Thêm quyền</h4>
+                        </div>
+                        <form asp-action="CreateRole" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="RoleName" class="control-label"></label>
+                                    <input asp-for="RoleName" class="form-control" placeholder="Hr,Admin..." />
+                                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="submit" value="Submit" class="btn btn-outline-primary" />
+                                </div>
+                            </div>
+
+                        </form>
+                        <hr>
+                        <a asp-action="ListRoles" class="btn btn-block   btn-success">Danh sách Role</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

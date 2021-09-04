@@ -1,0 +1,35 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Tajawal');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+
+a.h2 {
+    color: #007b5e;
+    margin-bottom: 0;
+    text-decoration: none;
+}
+
+#myModal88 .form-control {
+    height: 56px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    padding-left: 30px;
+}
+
+#myModal88 .btn {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-right: 20px;
+    background: #007b5e;
+    border-color: #007b5e;
+    color: white;
+}
+
+#myModal88 .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #007b5e;
+    outline: 0;
+    box-shadow: none;
+}
+
+

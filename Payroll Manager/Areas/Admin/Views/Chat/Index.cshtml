@@ -1,0 +1,265 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.ChatViewModel
+
+@{
+    ViewData["Title"] = "Tin nhắn hệ thống";
+}
+
+    <style>
+    .main-panel {
+        transition: width 0.25s ease, margin 0.25s ease;
+        min-height: calc(100vh - 60px);
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+    .content-wrapper {
+        background: #f3f3f3;
+        padding: 2.1rem 1.04rem;
+        width: 100%;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+    }
+    .overflow-hidden {
+        overflow: hidden !important;
+    }
+
+    .rounded-lg {
+        border-radius: 0.3rem !important;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -10px;
+        margin-left: -10px;
+    }
+    .pl-4, .px-4 {
+        padding-left: 1.5rem !important;
+    }
+    .bg-white {
+        background-color: #ffffff !important;
+    }
+    .rounded-0 {
+        border-radius: 0 !important;
+    }
+
+    .list-group {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+    .list-group-item-light.list-group-item-action.active {
+        color: #ffffff;
+        background-color: #818182;
+        border-color: #818182;
+    }
+    .media {
+        display: flex;
+        align-items: flex-start;
+    }
+    .rounded-circle {
+        border-radius: 50% !important;
+    }
+    .ml-4, .mx-4 {
+        margin-left: 1.5rem !important;
+    }
+    .media-body {
+        flex: 1;
+    }
+    .mb-1, .my-1 {
+        margin-bottom: 0.25rem !important;
+    }.pl-0, .px-0 {
+         padding-left: 0 !important;
+     }
+    h5, .h5 {
+          font-size: 1rem;
+      }
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        font-weight: 500;
+        line-height: 1;
+    }
+    .pb-1, .py-1 {
+        padding-bottom: 0.25rem !important;
+    }
+    .mb-0, .my-0 {
+        margin-bottom: 0 !important;
+    }
+    .col-2 {
+        flex: 0 0 16.66667%;
+        max-width: 16.66667%;
+    }
+    .col-10 {
+        flex: 0 0 83.33333%;
+        max-width: 83.33333%;
+    }.pb-5, .py-5 {
+         padding-bottom: 3rem !important;
+     }.ml-auto, .mx-auto {
+          margin-left: auto !important;
+      }
+    .mb-3, .my-3 {
+        margin-bottom: 1rem !important;
+    }
+    .w-50 {
+        width: 50% !important;
+    }
+    .pl-3, .px-3 {
+        padding-left: 1rem !important;
+    }
+    .text-muted {
+        color: #686868 !important;
+    }
+    small, .small {
+        font-size: 80%;
+        font-weight: 400;
+    }.text-small {
+         font-size: 12px;
+     }
+    .bg-primary {
+        background-color: #4d83ff !important;
+    }
+    .rounded {
+        border-radius: 0.25rem !important;
+    }
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+    .chat-detail p {
+        color: #303e67;
+        display: inline-block;
+    }
+    .input-group {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        width: 100%;
+    }
+    .input-group > .form-control:not(:first-child), .dataTables_wrapper .input-group > select:not(:first-child), .input-group > .custom-select:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .input-group > .form-control:not(:last-child), .dataTables_wrapper .input-group > select:not(:last-child), .input-group > .custom-select:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .input-group-append, .input-group-prepend {
+        color: #c9c8c8;
+        width: auto;
+        border: none;
+    }
+    .input-group-append {
+        margin-left: -1px;
+    }
+    .input-group-prepend, .input-group-append {
+        display: flex;
+    }
+    .input-group > .input-group-append > .btn, .input-group > .input-group-append > .input-group-text, .input-group > .input-group-prepend:not(:first-child) > .btn, .input-group > .input-group-prepend:not(:first-child) > .input-group-text, .input-group > .input-group-prepend:first-child > .btn:not(:first-child), .input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .chat-body {
+        padding: 20px;
+        background-image: url('@Url.Content("~/assets/images/pattern.png")');
+        background-repeat: repeat;
+        background-attachment: fixed;
+    }
+    .media-body h6 {
+        font-size: 14px;
+        color: #303e67;
+        margin-bottom: 5px;
+    }
+        .page-title-box {
+            padding: 25px;
+        }
+            .page-title-box .page-title {
+                line-height: 22px;
+                font-weight: bolder;
+                font-size: 18px;
+                margin: 0;
+                color: #303e67;
+            }
+    </style>
+    <div class="page-title-box">
+        <h4 class="page-title">Hệ thống Lan chat trong công ty Eventnet</h4>
+    </div>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row rounded-lg overflow-hidden">
+                <!-- Users box-->
+                <div class="col-2 px-0">
+                    <div class="bg-white">
+
+                        <div class="bg-gray px-4 py-2 bg-light">
+                            <p class="h5 mb-0 py-1">Chat</p>
+                        </div>
+
+                        <div class="messages-box">
+                            <div class="list-group rounded-0" id="online-list">
+                                @foreach (var user in Model.Users)
+                                {
+                    <a href="#" data-user-id="${user.id}" class="list-group-item list-group-item-action list-group-item-light rounded-0 @(Model.UserId == user.Id ? "active" : "")">
+                        <div class="media">
+                            <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
+                            <div class="media-body ml-4">
+                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                    <h6 class="mb-0">@user.LastName @user.FirstName</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chat Box-->
+                <div class="col-10 px-0  ">
+                    <div class="px-4 py-5 chat-body chat-box bg-white" id="messages-container">
+                        @foreach (var message in Model.Messages)
+                        {
+                            if (message.user.Id == Model.UserId)
+                            {
+            <div class="media w-50 ml-auto mb-3">
+                <div class="media-body">
+                    <div class="bg-primary rounded py-2 px-3 mb-2">
+                        <p class="text-small mb-0 text-white chat-detail">@message.message</p>
+                    </div>
+                    <p class="small text-muted">@message.date.ToString("dd.MM.yyyy, HH:mm:ss")</p>
+                </div>
+            </div> }
+                            else
+                            {
+            <div class="media w-50 mb-3">
+                <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
+                <div class="media-body ml-3 chat-detail">
+                    <p class="small text-muted">@message.user.LastName @message.user.FirstName</p>
+                    <div class="bg-light rounded py-2 px-3 mb-2">
+                        <p class="text-small mb-0 text-muted">@message.message</p>
+                    </div>
+                    <p class="small text-muted">@message.date.ToString("dd.MM.yyyy, HH:mm:ss")</p>
+                </div>
+            </div>                }
+                        }
+                    </div>
+
+                    <!-- Typing area -->
+                    <form class="bg-light chat-form">
+                        <div class="input-group">
+                            <input type="hidden" id="my-user-id" value="@Model.UserId" />
+                            <input type="text" class="form-control" id="message-box" placeholder="Type something here..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button id="button-addon2" type="submit" class="btn btn-primary"> Gửi</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            </div>
+        </div>
+
+            @section Scripts {
+                <script type="text/javascript" src="~/lib/microsoft/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
+                <script src="~/js/chat.js"></script>
+            }

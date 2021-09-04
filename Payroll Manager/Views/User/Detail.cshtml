@@ -1,0 +1,208 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Inventory.InventoryDetailViewModel
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+<style>
+    button.button {
+        display: inline-block;
+        border: 0;
+        background: #444;
+        padding: 6px 16px;
+        font-size: 12px;
+        border: 1px solid #444;
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        color: #fff;
+        font-weight: normal;
+        transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -webkit-transition: all 0.3s linear;
+        border-radius: 3px;
+    }
+
+        button.button:hover {
+            background: #e83f33;
+            border: 1px solid #e83f33;
+            transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -webkit-transition: all 0.3s linear;
+            color: #fff;
+        }
+
+    .box-border a:hover {
+        background: #444;
+        border: 1px solid #444;
+        transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -webkit-transition: all 0.3s linear;
+        color: #fff;
+    }
+
+    .box-border a {
+        display: inline-block;
+        border: 0;
+        background: #e83f33;
+        padding: 6px 16px;
+        font-size: 12px;
+        border: 1px solid #e83f33;
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        color: #fff;
+        font-weight: normal;
+        transition: all 0.3s linear;
+        -moz-transition: all 0.3s linear;
+        -webkit-transition: all 0.3s linear;
+        border-radius: 3px;
+    }
+
+    .page-content .page-title, .page-title {
+        margin: 0 0 5px;
+        padding: 0 0 8px;
+        border-bottom: 1px solid #e5e5e5;
+        position: relative;
+    }
+
+        .page-title h1, .page-title h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 0px;
+        }
+
+    .checkout-page {
+        margin-top: 12px;
+    }
+
+    .page-content {
+        margin-bottom: 30px;
+        padding: 0px;
+        overflow: hidden;
+    }
+
+    .checkout-page h4.checkout-sep {
+        text-transform: capitalize;
+        font-size: 15px;
+        border-bottom: 1px #e8e8e8 solid;
+        line-height: normal;
+        padding: 0 0 12px;
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
+
+    .checkout-page .box-border {
+        margin-bottom: 15px;
+    }
+
+        .checkout-page .box-border label {
+            margin-top: 5px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .form-control {
+        box-shadow: none;
+        border: 1px #e8e8e8 solid;
+        border-radius: 3px;
+    }
+</style>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer SharedLocalizer
+<header id="header">
+    <div class="container">
+        <div id="logo" class="pull-left">
+            <a href="/giaodien1.html" class="scrollto"><img src="~/UserAssets/img/logo.png" alt="" title=""></a>
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="#intro">Home</a></li>
+                <li><a href="#about">@SharedLocalizer["About"]</a></li>
+                <li><a href="#speakers">@SharedLocalizer["Speaker"]</a></li>
+                <li><a href="#gallery">@SharedLocalizer["Event Image"]</a></li>
+                <li><a href="#subscribe">@SharedLocalizer["Subcribe"]</a></li>
+                <li><a href="#contact">@SharedLocalizer["Contact"]</a></li>
+                <li class="buy-tickets">
+                    <a href="#buy-tickets">@SharedLocalizer["Buy Tickets"]</a>
+                </li>
+                <li class="buy-tickets">
+                    <a href="/giaodien2.html" style="background: #1167b1;border: 2px solid #1167b1;">Chuyển giao diện</a>
+                </li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header>
+@await Html.PartialAsync("_Info")
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="col-main col-sm-12 col-xs-12">
+                <div class="page-title">
+                </div>
+                <div class="page-content checkout-page">
+                    <form asp-controller="User" asp-action="Buy" method="get">
+                        @Html.AntiForgeryToken()
+                        <h2 class="checkout-sep last">Chi tiết sản phẩm</h2>
+                        <div class="box-border">
+                            <div class="table-responsive">
+                                <div class="card p-2">
+                                    <input id="productid" type="hidden" value="@Model.ProductId" />
+                                    <h5 class="card-title">@Model.Name</h5>
+                                    <img class="card-img-top p-1" src="~/Product_images/@Model.Image">
+                                    <div class="card-body">
+                                        <div id="seler">
+                                            <p id="seler-price" class="card-text">Lượt người yêu thích: @Model.LuotDat</p>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title">@Model.SalePrice.ToString("N0") VNĐ</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <button type="button" class="button" onclick="window.location.href='/user/index'"><span>Trở về trang chủ</span></button>
+
+                            <a type="submit" class="btn pull-right" id="addProductBtn" asp-action="Buy" asp-route-id="@Model.ProductId" asp-route-url="@Model.Name"><span>Yêu thích</span></a>
+                            <a class="btn pull-right" style="margin-right: 10px;" data-toggle="modal" data-target="#buy-ticket-modal" data-ticket-type="standard-access"><span>Đặt mua sản phẩm</span></a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Main Container End -->
+@*<div class="row">
+        <div class="col d-flex justify-content-center">
+            <div class="w-50">
+                <h2 class="text-center">Auction</h2>
+                <div class="card p-2">
+                    <input id="productid" type="hidden" value="@Model.InventoryDetail.ProductId" />
+                    <h5 class="card-title">@Model.InventoryDetail.Name</h5>
+                    <img class="card-img-top p-1" src="~/Product_images/@Model.InventoryDetail.Image">
+                    <div class="card-body">
+                        <div id="seler">
+                            <p id="seler-price" class="card-text">Lượt đặt: @Model.InventoryDetail.LuotDat</p>
+                        </div>
+                        <div>
+                            <h5 class="card-title">@Model.InventoryDetail.SalePrice.ToString("N0") VNĐ</h5>
+                            <a type="submit" class="btn btn-primary" id="addProductBtn" asp-action="Buy" asp-route-id="@Model.InventoryDetail.ProductId">Buy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@section Scripts {
+
+}

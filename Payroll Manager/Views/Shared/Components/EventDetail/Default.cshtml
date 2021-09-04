@@ -1,0 +1,21 @@
+﻿@model Payroll_Manager.Entity.ModelForUser.Event
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer SharedLocalizer
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>@SharedLocalizer["About The Event"]</h2>
+            <p>
+                @SharedLocalizer["..."]
+            </p>
+        </div>
+        <div class="col-lg-3">
+            <h3>@SharedLocalizer["Where"]</h3>
+            <p>Downtown Conference Center, New York</p>
+        </div>
+        <div class="col-lg-3">
+            <h3>Thời gian</h3>
+            <p>@Model.ThoiGianBatDau</p>
+        </div>
+    </div>
+</div>

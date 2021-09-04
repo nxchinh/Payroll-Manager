@@ -1,0 +1,208 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Bảo mật - Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var returnUrl = HttpContext.Request.Query["returnurl"];
+}
+@*<div class="container">
+    <div class="login-content">
+        <form id="account" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <img src="~/LoginAssets/img/avatar.svg">
+            <h2 class="title">Quản lý </h2>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                    <input asp-for="Input.Email" class="form-control" placeholder="Email"/>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="input-div pass">
+                <div class="i">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="div">
+                    <input asp-for="Input.Password" class="form-control" placeholder="Password" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 5px;">
+                <div class="checkbox">
+                    <label asp-for="Input.RememberMe">
+                        <input asp-for="Input.RememberMe" /> @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <p>
+                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                </p>
+                <p>
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                </p>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-sm">Log in</button>
+        </form>
+    </div>
+    <section>
+        <h4>Admin - Staff - Demo</h4>
+        <hr /> @{ if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                  {
+                      <div>
+                          <p>
+                              Services :  Attendance - Payroll - Department - Employee management
+                          </p>
+                      </div>
+                  }
+                  else
+                  {
+                      <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                          <div>
+                              <p>
+                                  @foreach (var provider in Model.ExternalLogins)
+                                  {
+                                      <button type="submit" class="btn btn-secondary btn-sm" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                  }
+                              </p>
+                          </div>
+                      </form>
+                  } }
+    </section>
+</div>
+<script type="text/javascript" src="~/LoginAssets/js/main.js"></script>*@
+<form id="account" method="post" class="js-validation-login form-horizontal push-30-t push-50" asp-route-returnurl="@returnUrl">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <div class="form-material form-material-primary floating">
+                <input class="form-control" asp-for="Input.Email" placeholder="Email">
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <div class="form-material form-material-primary floating">
+                <input class="form-control" type="password" asp-for="Input.Password" placeholder="Mật khẩu">
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <label class="css-input switch switch-sm switch-primary">
+                <input type="checkbox" asp-for="Input.RememberMe"><span></span> Nhớ tài khoản?
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <button class="btn btn-block btn-primary" type="submit">Đăng Nhập</button>
+        </div>
+    </div>
+</form>
+        @*<div class="animated fadeIn information container">
+        <div class="card" style="margin-right:10px">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body">
+                        <h4 class="box-title">@ViewData["Title"] </h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card-body">
+                                <section>
+                                    <form id="account" method="post" class="js-validation-login form-horizontal push-30-t push-50">
+                                        <h4>Use a local account to log in</h4>
+                                        <hr />
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="Input.Email"></label>
+                                            <input asp-for="Input.Email" class="form-control" />
+                                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Input.Password"></label>
+                                            <input asp-for="Input.Password" class="form-control" />
+                                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label asp-for="Input.RememberMe">
+                                                    <input asp-for="Input.RememberMe" /> @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-secondary btn-sm">Log in</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <p>
+                                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                                            </p>
+                                            <p>
+                                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card-body">
+                                <section>
+                                    <h4>Admin - Staff - Demo</h4>
+                                    <hr /> @{ if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                                              {
+                                                  <div>
+                                                      <p>
+                                                          Services :  Attendance - Payroll - Department - Employee management
+                                                      </p>
+                                                  </div>
+                                              }
+                                              else
+                                              {
+                                                  <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                                      <div>
+                                                          <p>
+                                                              @foreach (var provider in Model.ExternalLogins)
+                                                              {
+                                                                  <button type="submit" class="btn btn-secondary btn-sm" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                                              }
+                                                          </p>
+                                                      </div>
+                                                  </form>
+                                              } }
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <environment include="Development">
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"
+                asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.validator"
+                crossorigin="anonymous"
+                integrity="sha384-rZfj/ogBloos6wzLGpPkkOr/gpkBNLZ6b6yLy4o+ok+t/SAKlL5mvXLr0OXNi1Hp">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.9/jquery.validate.unobtrusive.min.js"
+                asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
+                crossorigin="anonymous"
+                integrity="sha384-ifv0TYDWxBHzvAk2Z0n8R434FL1Rlv/Av18DXE43N/1rvHyOG4izKst0f2iSLdds">
+        </script>
+    </environment>
+        }
+
+

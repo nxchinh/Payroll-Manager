@@ -1,0 +1,77 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_File.FileUploadViewModel
+@{
+    ViewData["Title"] = "Hình ảnh sự kiện";
+}
+<link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+<div class="row" style="padding: 15px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="card-title">Album hình ảnh sự kiện</div>
+                <a asp-action="Index" class="btn mr-2 mb-2 btn-primary">
+                    Danh sách hình ảnh sự kiện
+                </a>
+                @if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-success alert-dismissible" style="margin-top:20px">
+                        @ViewBag.Message
+                    </div>}
+                <form method="post" enctype="multipart/form-data">
+                    <div class="position-relative form-group">
+                        <input type="file" accept="image/x-png,image/gif,image/jpeg" name="files" multiple required/>
+                        <input type="text" autocomplete="off" placeholder="Enter File Description" name="description" required/>
+                    </div>
+                    <div class="position-relative form-group">
+                        <label>Sự kiện</label>
+                        <select id="EventID" Name="EventID" class="form-control" asp-items="@(new SelectList(ViewBag.Event, "Id", "TenSuKien"))">
+                            <option selected="selected" disabled>Thêm sự kiện..</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" asp-controller="EventImage" asp-action="UploadToFileSystem">Upload</button>
+                </form>
+                <h4>Danh sách image</h4>
+                @if (Model.EventFile.Count == 0)
+                {
+                    <caption>No Records Found</caption> }
+                else
+                {
+                    <caption>Danh sách file trong hệ thống</caption>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>FName</th>
+                                <th>Description</th>
+                                <th>File Type</th>
+                                <th>Created On</th>
+                                <th>Tên sự kiện</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var file in Model.EventFile)
+                            {
+                                <tr>
+                                    <th>@file.Id</th>
+                                    <td>@file.Name</td>
+                                    <td>@file.FullName</td>
+                                    <td>@file.Description</td>
+                                    <td>@file.FileType</td>
+                                    <td>@file.CreatedOn</td>
+                                    <td>@file.Event.TenSuKien</td>
+                                    <td>
+                                        <a type="button" class="btn btn-primary" asp-controller="EventImage" asp-action="DownloadFileFromFileSystem" asp-route-id="@file.Id">Download</a>
+                                        <a type="button" class="btn btn-danger" asp-controller="EventImage" asp-action="DeleteFileFromFileSystem" asp-route-id="@file.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>}
+
+
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>

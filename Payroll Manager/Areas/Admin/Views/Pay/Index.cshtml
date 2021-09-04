@@ -1,0 +1,126 @@
+﻿@model IEnumerable<Payroll_Manager.Areas.Admin.Models.VM_Payment.PaymentRecordIndexViewModel>
+
+@{
+    ViewBag.Title = "Payment Records";
+}
+
+<environment names="Development,Staging,Production">
+    <link href="/css/Animated.css" rel="stylesheet" type="text/css" />
+    <link href="/css/Pay.css" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/assets/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link href="~/assets/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+</environment>
+@*Differs from employee index on the headings it displays e.g ln 14, 19, 25-30 , 53-57 aswell as the foreach variables fetched *@
+<div class="animated fadeIn pay">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Payroll List</li>
+                        </ol>
+                    </nav><br /><br />
+                    <div class="row">
+                        <div class="col-md-12 table-responsive-md">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="title"><span><a href="#">Company Payroll</a></span></div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="datatable_length">
+                                        <label>
+                                            Show entries :
+                                            <select name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="datatable_filter" class="dataTables_filter">
+                                        <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-xs btn-outline-success float-md-right btnnewpay" asp-action="Create"> New Pay</a>
+
+                            <table id="datatable" class="table table-striped mb-0 table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                                <thead class="thead-light">
+                                    <tr role="row">
+                                        <th class="sorting border-top-0" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 133px;">Employee</th>
+                                        <th class="sorting border-top-0" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 90px;">Pay Date</th>
+                                        <th class="sorting border-top-0" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 90px;">Month</th>
+                                        <th class="sorting border-top-0" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 90px;">Tax Year</th>
+                                        <th class="sorting border-top-0" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 90px;">Total Earnings</th>
+                                        <th class="sorting border-top-0" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 90px;">Total Deductions</th>
+                                        <th class="sorting border-top-0" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 90px;">Net Pay</th>
+                                        <th class="sorting border-top-0 text-warning" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 90px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="text-primary" asp-action="Detail" asp-route-id="@item.Id">
+                                                    @item.FullName
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @item.PayDate.ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td>@item.PayMonth</td>
+                                            <td>@item.Year</td>
+                                            <td>@item.TotalEarnings.ToString("C")</td>
+                                            <td>@item.TotalDeduction.ToString("c")</td> @* C stands for currency (case insensitive) *@
+                                            <td>@item.NetPayment.ToString("C")</td>
+                                            <td>
+
+                                                <a class="text-success" asp-action="Payslip" asp-route-id="@item.Id">
+                                                    <i class="fas fa-bars"></i> Preview Payslip
+                                                </a>
+                                                <a class="text-danger" asp-action="GeneratePayslipPdf" asp-route-id="@item.Id">
+                                                    <i class="fas fa-file-pdf"></i> Payslip Pdf
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table><br />
+                            <div class="row">
+
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing 1 to 11 of 11 entries</div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled" id="datatable_previous">
+                                                <a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                                            </li>
+                                            <li class="paginate_button page-item active"><a href="#" aria-controls="datatable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                            <li class="paginate_button page-item next disabled" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<environment names="Development,Staging,Production">
+    <script src="~/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/assets/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/scripts/jquery.crypto-exchange.init.js"></script>
+</environment>

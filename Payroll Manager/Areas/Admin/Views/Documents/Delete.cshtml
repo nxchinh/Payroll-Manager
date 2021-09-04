@@ -1,0 +1,16 @@
+﻿@model Payroll_Manager.Entity.DocumentInfo
+
+@{ ViewData["Title"] = "Удаление"; }
+@section Styles{
+    <link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+}
+<h3>Вы действительно хотите удалить?</h3>
+<div>
+    <h4>Документ @($"№{Model.Number} от {Model.Date:dd.MM.yyyy}")</h4>
+    <hr />
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="List">Вернуться к списку</a>
+    </form>
+</div>

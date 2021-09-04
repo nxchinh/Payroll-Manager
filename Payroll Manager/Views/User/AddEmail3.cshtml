@@ -1,0 +1,14 @@
+﻿@model Payroll_Manager.Models.EmailSendViewModel
+
+@using (Html.BeginForm("AddEmail3", "User", FormMethod.Post))
+    {
+    <div class="form-row justify-content-center">
+        <div class="col-auto">
+            <input asp-for="_mails.From" type="text" class="form-control" placeholder="Enter your Email">
+        </div>
+        <div class="col-auto">
+             <button type="submit">Subscribe</button>
+        </div>
+    </div>
+
+    }

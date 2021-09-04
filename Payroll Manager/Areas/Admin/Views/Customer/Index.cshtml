@@ -1,0 +1,158 @@
+﻿@model Payroll_Manager.Areas.Admin.PaginatedList<Payroll_Manager.Areas.Admin.Models.VM_Customer.CustomerIndexViewModel>
+@{ ViewData["Title"] = "Khách hàng"; }
+
+<environment names="Development,Staging,Production">
+    <link href="~/css/Animated.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Employee.css" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/assets/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+</environment>
+
+<div class="animated fadeIn employee index">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <nav aria-label="breadcrumb">
+                        @* asp-action runs action method name *@
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Customer List</li>
+                        </ol>
+                    </nav><br /><br />
+                    <div class="row">
+                        <div class="col-lg-12 table-responsive-md">
+                            <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="title"><span><a href="#">Customer List</a></span></div>
+                                    </div>
+                                </div>
+                                <a class="btn btn-xs btn-outline-success float-md-right btnnewemployee" asp-action="Create"> New Customer</a>
+                                <br />
+                                <div class="panel-body" style="margin-top: 10px;">
+
+                                    <h3>Tìm khách hàng</h3>
+                                    <p>Lựa chọn để tìm kiếm</p>
+
+                                    <p>
+
+                                        @using (Html.BeginForm("Index", "Customer", FormMethod.Get))
+                                        {
+                                            <div style="padding: 5px">
+                                                @Html.RadioButton("option", "CustomerPhone")
+                                                <text>Số điện thoại khách hàng</text>
+                                            </div>
+                                            <div style="padding: 5px">
+                                                @Html.RadioButton("option", "CustName")
+                                                <text>Tên khách hàng</text>
+                                            </div>
+
+                                            @Html.TextBox("search")
+
+                                            <input type="submit" class="btn btn-info" name="submit" value="Search" />
+                                            <input type="button" class="btn btn-info" value="Reset Search" onclick="location.href='@Url.Action("Index")'" />
+                                        }
+
+                                    </p>
+
+                                </div>
+                                <table id="datatable" class="table table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                                    <thead class="thead-light">
+                                        <tr role="row">
+                                            <th class="border-top-0 sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="No: activate to sort column descending" style="width: 117px;">Email</th>
+                                            <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" style="width: 117px;">FullName</th>
+                                            <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" style="width: 117px;">Số điện thoại</th>
+                                            <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" style="width: 120px;">Khách hàng tồn tại</th>
+
+                                            <th class="border-top-0 text-warning sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" style="width: 210px;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            var i = 1;
+                                        }
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr role="row" class="odd">
+                                                <td>
+                                                    <a class="text-primary" asp-action="Details" asp-route-id="@item.CustomerId">
+                                                        @item.Email
+                                                    </a>
+                                                </td>
+                                                <td class="sorting_1">@item.FullName</td>
+                                                <td>@item.PhoneNum</td>
+                                                @if (item.Active == 1)
+                                                {
+                                                    <td style="text-align: center;padding:10px">
+                                                        <div style="padding:10px" class="mb-2 mr-2 badge badge-pill badge-primary">có</div>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align: center;padding:10px">
+                                                        <div style="padding:10px" class="mb-2 mr-2 badge badge-pill badge-danger">không</div>
+                                                    </td>
+                                                }
+                                                <td>
+                                                    <a style="margin-left: 8px" class="text-primary" asp-action="Edit" asp-route-id="@item.CustomerId">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+                                                    <a style="margin-left: 8px" class="text-success" asp-action="Details" asp-route-id="@item.CustomerId">
+                                                        <i class="fas fa-bars"></i> Detail
+                                                    </a>
+                                                    <a class="text-danger" asp-action="Delete" asp-route-id="@item.CustomerId">
+                                                        <i class="far fa-trash-alt"></i> Delete
+                                                    </a>
+                                                    <a class="text-danger" asp-action="Restore" asp-route-id="@item.CustomerId">
+                                                        <i class="far fa-trash-alt"></i> Restore
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    </tbody>
+                                </table>
+                                <br />
+                                <div class="row">
+
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing 4 entries</div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7">
+                                        @* Adding pages to the list *@
+                                        @{
+                                            var disablePrevious = !Model.HasPreviousPage ? "disabled" : "";
+                                            var disableNext = !Model.HasNextPage ? "disabled" : "";
+                                        }
+
+                                        <a asp-action="Index"
+                                           asp-route-pageNumber="@(Model.PageIndex - 1)"
+                                           class="btn btn-paging btn-sm @disablePrevious">
+                                            Previous
+                                        </a>
+                                        <a asp-action="Index"
+                                           asp-route-pageNumber="@(Model.PageIndex + 1)"
+                                           class="btn btn-paging btn-sm @disableNext">
+                                            Next
+                                        </a>
+                                    </div>
+                                </div>
+                                <br />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<environment names="Development,Staging,Production">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/assets/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/scripts/jquery.crypto-exchange.init.js"></script>
+</environment>

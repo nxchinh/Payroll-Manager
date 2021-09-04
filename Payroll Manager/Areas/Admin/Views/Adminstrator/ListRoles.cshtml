@@ -1,0 +1,59 @@
+﻿@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "Danh sách quyền";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+ }
+<link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+<div class="page-title-box">
+    <h4 class="page-title"><b>Danh sách quyền đăng nhập (Roles)</b></h4>
+</div>
+@if (Model.Any())
+{
+    <div id="wrapper">
+        <a class="btn btn-block btn-primary px-3" asp-controller="adminstrator" asp-action="CreateRole">
+            Tạo quyền đăng nhập mới
+        </a>
+    </div>
+
+
+                <div class="row">
+                    @foreach (var role in Model)
+                    {
+
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    RoleId: @role.Id
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">@role.Name</h5>
+                                </div>
+                                <div class="card-footer">
+                                    <a class="btn btn-outline-primary" asp-action="EditRole" asp-controller="Adminstrator" asp-route-id="@role.Id"> Chỉnh sửa quyền truy cập</a>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+
+                        }
+                    </div>
+
+}
+else
+{
+                <div class="card">
+                    <div class="card-header">
+Hệ thống đang trống quyền
+                    </div>
+                    <div class="card-body">
+                        <a class="btn btn-primary" style="width: auto" asp-controller="adminstrator" asp-action="CreateRole">
+                            Vui lòng thêm quyền đăng nhập mới
+                        </a>
+                    </div>
+                </div>
+                }
+

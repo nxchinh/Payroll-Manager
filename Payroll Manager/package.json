@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {
+    "@microsoft/signalr": "^3.1.5",
+    "@types/node": "^14.0.13",
+    "jquery": "^3.5.1",
+    "jquery-validation": "^1.19.1",
+    "jquery-validation-unobtrusive": "^3.2.11",
+    "popper.js": "^1.16.1"
+  },
+  "dependencies": {}
+}

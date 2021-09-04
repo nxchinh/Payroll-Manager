@@ -1,0 +1,8 @@
+﻿@model List<Payroll_Manager.Areas.Admin.Models.VM_Employee.EmployeeIndexViewModel>
+
+<datalist id="data1">
+    @foreach (var item in Model)
+    {
+        <option>@item.FullName</option>
+    }
+</datalist>

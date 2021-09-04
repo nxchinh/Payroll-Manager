@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Payroll_Manager.Areas.Admin.Models.VM_Event.EventViewModel>
+@{ ViewData["Title"] = "Sự kiện"; }
+<table class="table table-bordered mb-0 table-centered table-sm">
+    <thead>
+        <tr>
+            <th class="text-center">
+                Tên Sự kiện
+            </th>
+            <th class="text-center">
+                Active
+            </th>
+            <th class="text-center">
+                Thời gian bắt đầu
+            </th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var data in Model)
+        {
+<tr class="hidden">
+    <td id="tbid" hidden>
+        <input asp-for="@data.Id" />
+    </td>
+    <td class="text-center" id="tbname">
+        @data.TenSuKien
+    </td>
+    <td class="text-center" id="tbfname">
+        @if (data.Active)
+        {
+<span class="badge badge-md badge-soft-success">Completed</span> }
+                else
+                {
+<span class="badge badge-md badge-soft-danger">Cancelled</span>                }
+    </td>
+    <td class="text-center" id="tbcnin">
+        @data.ThoiGianBatDau
+    </td>
+    <td>
+        <a style="color: white; margin: 5px;" class="btn btn-primary" onclick="edt(@data.Id)">Edit</a>
+        <a style="color: white; margin: 5px;" class="btn btn-success" onclick="res(@data.Id)">Restore</a>
+        <a style="color: white; margin: 5px;" class="btn btn-danger" onclick="Del(@data.Id)">Delete</a>
+    </td>
+</tr>}
+    </tbody>
+</table>

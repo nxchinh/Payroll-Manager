@@ -1,0 +1,128 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Inventory.InventoryCreateViewModel
+
+@{
+    ViewData["Title"] = "Sản phẩm event";
+
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href="/css/Animated.css" rel="stylesheet" type="text/css" />
+<link href="/css/Employee.css" rel="stylesheet" type="text/css" />
+<div class="animated fadeIn employee">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-action="Index">Product List</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Update Product</li>
+                    </ol>
+                </nav>
+                <br />
+                <br />
+                <div class="title"><span><a href="#">Update Product</a></span></div>
+                <form enctype="multipart/form-data" method="post" asp-action="Update">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ProductId" id="title4"></label>
+                        <input asp-for="ProductId" class="form-control" readonly/>
+                        <span asp-validation-for="ProductId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" id="title4"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" id="title4"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NetPrice" id="title4"></label>
+                        <input asp-for="NetPrice" class="form-control" />
+                        <span asp-validation-for="NetPrice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SalePrice" id="title4"></label>
+                        <input asp-for="SalePrice" class="form-control" />
+                        <span asp-validation-for="SalePrice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Quantity" id="title4"></label>
+                        <input asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaleQuantity" id="title4"></label>
+                        <input asp-for="SaleQuantity" class="form-control" readonly/>
+                        <span asp-validation-for="SaleQuantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RestQuantity" id="title4"></label>
+                        <input asp-for="RestQuantity" class="form-control" readonly/>
+                        <span asp-validation-for="RestQuantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CategoryId" id="title4"></label>
+                        @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Image, new { @id = "title4" })
+                        <input asp-for="Image" class="form-control form-control-file" type="file" accept="image/*" onchange="showMyImage(this)" />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ImageURL" id="title4"></label>
+                        <input asp-for="ImageURL" class="form-control" readonly/>
+                        <img id="thumbnil" style="width:20%; margin-top:10px;" src="~/Product_images/@Html.DisplayFor(model =>model.ImageURL)" alt="image" />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <br />
+
+                    <div class="form-group">
+
+                        <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Save</button>
+                        <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({ selector: 'textarea', width: 850 });
+</script>
+<script type="text/javascript">
+    function showMyImage(fileInput) {
+        var files = fileInput.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /image.*/;
+            if (!file.type.match(imageType)) {
+                continue;
+            }
+            var img = document.getElementById("thumbnil");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function (e) {
+                    aImg.src = e.target.result;
+                };
+            })(img);
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

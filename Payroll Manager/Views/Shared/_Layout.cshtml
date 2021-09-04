@@ -1,0 +1,74 @@
+﻿
+    @*<!DOCTYPE html>
+
+    <html lang="en">
+    <head>
+        <title>Login Form</title>
+        <link rel="stylesheet" type="text/css" href="~/LoginAssets/css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        @RenderBody()
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+    </body>
+    </html>*@
+
+<!DOCTYPE html><html class="no-focus">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Đăng Nhập</title>
+
+    <meta name="description" content="OneUI - Admin Dashboard Template & UI Framework created by pixelcave and published on Themeforest">
+    <meta name="author" content="pixelcave">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
+    <link rel="stylesheet" id="css-main" href="~/assets/oneui.css">
+    <link href="~/assets/Sidebar.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Login Content -->
+    <div class="content overflow-hidden">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                <!-- Login Block -->
+                <div class="block block-themed animated fadeIn">
+                    <div class="block-header bg-primary">
+                        <ul class="block-options">
+                            <li>
+                                <a href="/Account/Forgotpassword">Quên Mật Khẩu?</a>
+                            </li>
+                            <li>
+                                <a href="/Account/Register" data-toggle="tooltip" data-placement="left" title="Đăng Ký"><i class="si si-plus"></i></a>
+                            </li>
+                        </ul>
+                        <h3 class="block-title">Login</h3>
+                    </div>
+                    <div id="login" class="block-content block-content-full block-content-narrow">
+                        <!-- Login Title -->
+                        <h1 class="h2 font-w600 push-30-t push-5">Đăng Nhập</h1>
+                        @RenderBody()
+                        <!-- END Login Form -->
+                    </div>
+                </div>
+                <!-- END Login Block -->
+            </div>
+        </div>
+    </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+@RenderSection("Scripts", required: false)
+    <!-- Page JS Code -->
+    <script src="~/js/base_pages_login.js"></script>
+</body>
+</html>

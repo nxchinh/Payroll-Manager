@@ -1,0 +1,51 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Employee.EmployeeDetailViewModel
+@* changes from edit: Form removed   ln 5, 12,
+    Added lines 16-44 : href used to perform an action with that detail e.g ln 34 (send payslip) can be used to automatically generate
+    a payslip email with subject payslip and body template "within is your payslip" (doesnt add the payslip pdf yet) *@
+@{ ViewData["Title"] = "Khách hàng"; }
+<link href="/css/Animated.css" rel="stylesheet" type="text/css" />
+<link href="/css/Employee.css" rel="stylesheet" type="text/css" />
+<div class="col-md-12 grid-margin grid-margin-md-0">
+    <div class="card">
+        <div class="card-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index">Employee List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Detail Employee</li>
+                </ol>
+            </nav><br /><br />
+            <div class="wrap d-flex justify-content-start justify-content-sm-center flex-wrap">
+                <img class="rounded-circle shadow-lg" style="width:300px; height:350px" src="~/images/@Model.ImageUrl" alt="" />
+                <div class="wrap align-items-center ml-5">
+                    <p class="font-weight-bold text-success" style="font-size:20px">@Model.FullName</p>
+                    <p class="font-weight-normal"> Role: @Model.Designation</p>
+                    <p class="font-weight-normal"> Gender: @Model.Gender</p>
+                    <p class="font-weight-normal">Date Of Birth: @Model.DOB.ToString("dd/MM/yyyy")</p>
+                    <p class="font-weight-normal">Employee Number: @Model.EmployeeNo</p>
+                    <p class="font-weight-normal">NI Number: @Model.NationalInsuranceNo</p>
+                    <p class="font-weight-normal">Email: <a href="#">@Model.Email</a></p>
+                    <p class="font-weight-normal">Phone: <a href="tel:@Model.Phone">@Model.Phone</a></p>
+                    <br /><br />
+                    <p class="font-weight-bold"> Pay & Deductions</p>
+                    <hr style="background-color:crimson" />
+                    <p class="font-weight-normal"> Payment Method: @Model.PaymentMethod</p>
+                    <p class="font-weight-normal"> Student Loan: @Model.StudentLoan</p>
+                    <p class="font-weight-normal"> Union Member: @Model.UnionMember</p>
+                    <p class="font-weight-normal"><i class="fas fa-envelope" style="margin-right:0.6em; color:cornflowerblue"></i> <a href="mailto:@Model.Email?subject=Payslip&body=Attached within is your paylip.">Send Payslip</a></p>
+                    <br /><br />
+
+                    <p class="font-weight-bold"> Address</p>
+                    <hr style="background-color:crimson" />
+                    <p class="font-weight-normal"> Address Id: @Model.AddressId</p>
+                    <p class="font-weight-normal"> Address City: @Model.Address.City</p>
+                    <p class="font-weight-normal"> Address AptNumber: Department @Model.Address.AptNumber</p>
+                    <p class="font-weight-normal"> Address StreetAddress: @Model.Address.StreetAddress</p>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

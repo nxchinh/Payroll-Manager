@@ -1,0 +1,100 @@
+﻿@model List<Payroll_Manager.Areas.Admin.Models.VM_Employee.EmployeeIndexViewModel>
+
+
+@section Scripts
+{
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-toggle.css" />
+}
+@{
+    ViewData["Title"] = "Mark";
+    Layout = "~/Views/Shared/_Layout_A.cshtml";
+}
+
+<h2>Index</h2>
+
+
+
+<form method="post" asp-controller="Users" asp-area="Admin" asp-action="Index">
+    @if (ViewBag.Message != null)
+    {
+        if (ViewBag.Message == "Samedate")
+        {
+            <div role="alert" class="alert alert-danger alert-dismissible">
+                <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">x</span></button>
+                Ngày này đang được điểm danh nếu có yêu cầu chỉnh sửa hãy qua danh sách điểm danh chỉnh sửa
+            </div>
+        }
+        else if (ViewBag.Message == "nullDate")
+        {
+            <div role="alert" class="alert alert-danger alert-dismissible">
+                <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">x</span></button>
+                Xảy ra lỗi chọn ngày
+            </div>
+        }
+        else if (ViewBag.Message == "Errordate")
+        {
+            <div role="alert" class="alert alert-danger alert-dismissible">
+                <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">x</span></button>
+                Ngày này chưa đến !!! vui lòng chọn điểm danh ngày hôm nay hoặc trước đó
+            </div>
+        }
+    }
+    <div class="col-md-4 paddingTop" style="width: 355px;">
+        <p>
+            <a asp-action="viewStudents" class="btn pmd-ripple-effect btn-primary">View All Employees</a>
+        </p>
+        <div class="form-actions no-color" style="width: 314px;">
+            <p style="font-size: 1.2em;padding-left: 0;font-weight: 500;">
+                Select a date:
+                <!--Inline Datepicker -->
+                <div id="datepicker-inline" style="padding-left: 10px;">
+                    <input type="hidden" class="form-control" id="datepicker-data" name="selectedDate" value="@ViewData["selectedDate"]">
+                </div>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-8 paddingTop" id="studentsTable">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>Attendance</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    @Html.HiddenFor(m => m[i].Id)
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => m[i].FullName)
+                            @Html.HiddenFor(m => m[i].FullName)
+
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(m => m[i].Temporary_status, new { @class = "bindCheckBox" })
+                            <div class="pmd-switch" style="padding: 5px;">
+                                <p class="absent" style="padding: 5px;">Có</p>
+                                <label style="padding: 5px;">
+                                    <input type="checkbox">
+                                    <span class="pmd-switch-label"></span>
+                                </label>
+                                <p class="present" style="padding: 5px;">Vắng</p>
+                            </div>
+                        </td>
+                        <td>
+                            <a asp-action="viewEmp">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn pmd-ripple-effect btn-success" />
+        </div>
+    </div>
+</form>

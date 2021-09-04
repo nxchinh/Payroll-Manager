@@ -1,0 +1,179 @@
+﻿@model IEnumerable<Payroll_Manager.Entity.ModelForUser.SaleItem>
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<link href="/css/Animated.css" rel="stylesheet" type="text/css" />
+<link href="/css/Employee.css" rel="stylesheet" type="text/css" />
+<div class="animated fadeIn employee">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-action="Index">Thêm danh sách thanh toán</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Thêm Chi tiết thanh toán</li>
+                    </ol>
+                </nav>
+                <br/>
+                <br/>
+                <h4 class="mt-0 header-title">Thông tin thanh toán: Công ty EventNet</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="pro-order-box">
+                            <i class="mdi fas fa-train text-success"></i>
+                            <h4 class="header-title">Mã thanh toán</h4>
+                            <p class="text-muted mb-0">
+                                @Html.DisplayName(HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID").ToString())
+                            </p>
+                        </div>
+                    </div><!--end col-->
+                    <div class="col-md-4">
+                        <div class="pro-order-box">
+                            <i class="mdi fas fa-car text-danger"></i>
+                            <h4 class="header-title">Mã nhân viên thực hiện</h4>
+                            <p class="text-muted mb-0">
+                                @ViewBag.userEmail _ Quyền : @ViewBag.Role
+                            </p>
+                        </div>
+                    </div><!--end col-->
+                    <div class="col-md-4">
+                        <div class="pro-order-box">
+                            <i class="mdi fas fa-bus text-warning"></i>
+                            <h4 class="header-title">Mã khách hàng</h4>
+                            <p class="text-muted mb-0">
+                                @Html.DisplayName(HttpContextAccessor.HttpContext.Session.GetInt32("Current CustomerID").ToString())
+                            </p>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+            <br />
+            <div class="card-body">
+                <div class="title"><span><a href="#">Thêm Chi tiết thanh toán</a></span></div>
+                <form method="post" enctype="multipart/form-data" asp-action="Create">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    <div class="position-relative form-group">
+                        @Html.LabelFor(model => model.FirstOrDefault().ProductId, "ProductID", htmlAttributes: new {@class = ""})
+                        @Html.DropDownList("ProductId", (IEnumerable<SelectListItem>) ViewBag.ProductID, "Chọn sản phẩm", htmlAttributes: new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.FirstOrDefault().ProductId, "", new {@class = "text-danger"})
+                    </div>
+                    <div class="position-relative form-group">
+                        @Html.LabelFor(model => model.FirstOrDefault().Quantity, htmlAttributes: new {@class = ""})
+                        <input name="Quantity" id="Quantity" class="form-control" placeholder="0" />
+                        @Html.ValidationMessageFor(model => model.FirstOrDefault().Quantity, "", new {@class = "text-danger"})
+                    </div>
+                    <br/>
+                    <br/>
+
+                    <div class="form-group">
+
+                        <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right: 0.7em"></i>Add to purchase</button>
+                        <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right: 0.7em"></i>Back</a>
+                        <br/>
+                        <br/>
+                        <br/>
+
+                    </div>
+                </form>
+                <hr style="border: 0px; border-top: 1px solid black; width: 1150px; text-align: center"/>
+                <div class="row">
+                    <div class="col-md-12 table-responsive-md">
+                        <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <table id="datatable" class="table table-bordered dataTable no-footer desing" role="grid" aria-describedby="datatable_info">
+                                <thead class="thead-light">
+                                <tr role="row">
+                                    <th class="border-top-0 sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="No: activate to sort column descending" style="width: 30px;">ID</th>
+                                    <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Tên</th>
+                                    <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Số lượng</th>
+                                    <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Tổng tiền</th>
+                                    <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Hoạt động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if (Model.Count(x => x.SaleId == HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID")) == 0)
+                                {
+                                    <tr class="no-data">
+                                        <td colspan="6">No data</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model.Where(x => x.SaleId == HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID")))
+                                    {
+                                        <tr role="row" class="odd">
+                                            <td style="text-align: center;">@item.ProductId</td>
+                                            <td style="text-align: center;">@item.Inventory.Name </td>
+                                            <td style="text-align: center;">@item.TotalSI </td>
+                                            <td style="text-align: center;">@item.TotalSiPrice </td>
+                                            <td>
+                                                <a class="text-danger" asp-action="Cancel" asp-route-id="@item.SaleId">
+                                                    <i class="far fa-trash-alt"></i> Bỏ thanh toán
+                                                </a>
+                                            </td>
+                                        </tr>}
+                                }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body btc-price" style="position: relative;">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="text-muted">Số lượng đang bán</span>
+                    <h3 class="mt-0">
+                        @if (Model.LastOrDefault()?.SaleId == HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID"))
+                        {
+            @Html.DisplayFor(model => model.LastOrDefault().Sale.TotalSaleItems)
+
+                        }
+                        @if (Model.LastOrDefault()?.SaleId != HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID"))
+                        {
+            @Html.DisplayName("0")}
+                    </h3>
+                </div>
+                <div class="col-md-4">
+                    <span class="text-muted">
+                        Tổng cộng (VNĐ)
+                    </span>
+                    <h3 class="mt-0">
+                        @if (Model.LastOrDefault()?.SaleId == HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID"))
+                        {
+                            @Html.DisplayFor(model => model.LastOrDefault().Sale.TotalSalePrice) 
+
+                        }
+                        @if (Model.LastOrDefault()?.SaleId != HttpContextAccessor.HttpContext.Session.GetInt32("Current SaleID"))
+                        {
+            @Html.DisplayName("0")
+
+                        }
+
+                    </h3>
+                </div> 
+                <div class="col-md-4">
+                    @Html.ActionLink("Hoàn tất thanh toán", "CheckOut","SaleItem",null, new { @class = "btn btn-gradient-success btn-sm px-3 float-right" })
+                    @Html.ActionLink("Trở về để chọn lại khách hàng hoặc nhân viên", "NewSale", "Sale", null, new { @class = "btn btn-gradient-primary btn-sm px-3 float-right" })
+                </div>
+            </div>
+
+        </div><!--end card-body-->
+    </div><!--end card-->
+</div>
+<script type="text/javascript">
+    $("#Quantity").focus(function() {
+        $(this).val("0");
+    });
+</script>

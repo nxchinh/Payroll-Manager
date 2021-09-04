@@ -1,0 +1,64 @@
+﻿@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+.card {
+    margin-bottom: 1.875em;
+    border-radius: 5px;
+    padding: 0;
+    border: 0px solid transparent;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+}
+h4.information {
+    font-size: 1em;
+}
+.information {
+    margin: 1em;
+    padding: 20px;
+    font-size: 13px;
+    background-color: #eaf0f7;
+    font-family: "Poppins", sans-serif;
+    color: #50649c;
+}
+.col-lg-12 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.card .card-body {
+    float: left;
+    padding: 1.25em;
+    position: relative;
+    width: 100%;
+    flex: 1 1 auto;
+}
+.btn-secondary {
+    cursor: pointer;
+    line-height: 24px;
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 14px;
+    background-color: #4ac7ec;
+    border: 1px solid #4ac7ec;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(74, 199, 236, 0.5);
+    box-shadow: 0 2px 6px 0 rgba(74, 199, 236, 0.5);
+    color: #f3f6f7;
+}
+    .btn-secondary:hover,
+    .btn-secondary:active,
+    .btn-secondary:focus,
+    .btn-secondary:visited {
+        background-color: #8ecafb;
+        border: 1px solid #8ecafb;
+    }
+.form-control:focus {
+    border-color: #22af47;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+} 

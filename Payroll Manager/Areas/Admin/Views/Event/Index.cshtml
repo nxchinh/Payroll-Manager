@@ -1,0 +1,235 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Event.EventViewModel
+@{ ViewData["Title"] = "Sự kiện"; }
+<link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title" style="color: #2f5275; font-weight: bolder">Trình quản lý sự kiện</h4>
+                        <p class="text-muted mb-3">
+                            <input id="hidid" asp-for="Id" hidden />
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label text-right">Tên</label>
+                                    <div class="col-sm-10">
+                                        <input asp-for="TenSuKien" type="text" placeholder="Nhập tên sự kiện " class="form-control " id="name" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <button class="btn btn-primary" class="col-lg-6" id="btnAdd" onclick="save()">Save</button>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label for="example-search-input" class="col-sm-2 col-form-label text-right">Thời gian</label>
+                                    <div class="col-sm-10">
+                                        <input asp-for="ThoiGianBatDau" asp-format="{0:dd/MM/yyyy HH:mm}" class="form-control " id="faname" placeholder="Nhập Thời gian bắt đầu" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div><!--end col-->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title" style="color: #2f5275; font-weight: bolder">Danh sách sự kiện</h4>
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media mb-3 mb-lg-0">
+                            <div class="media-body align-self-center">
+                                <h5 class="mt-0 mb-1" style="color: #303e67;">Sự kiện</h5>
+                            </div><!--end media body-->
+                        </div> <!--end media-->
+                        <div class="card card-body mb-0">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="table-responsive">
+                                        <div id="tbl">
+
+                                        </div>
+                                    </div>
+                                </div><!-- end col-->
+                                <div class="col-lg-4 ">
+                                    <h4 class="mt-0 header-title">Hình ảnh sự kiện (Active)</h4>
+                                    <div class="carousel-bg-img">
+                                        <div id="eventimage" class="dash-info-carousel">
+
+                                        </div><!--end card-body-->
+                                    </div>
+                                </div><!-- end col-->
+                            </div><!--end row-->
+                        </div><!--end card-->
+                    </div><!--end collapse-->
+                </div><!--end card-body-->
+            </div><!--end card--><!--end col-->
+        </div><!--end row-->
+
+    </div><!-- container -->
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $('#erst').click(function() {
+            $("#faname").val();
+            $("#name").val();
+            $('#name').attr("value", "");
+        });
+        window.onload = function() {
+            pagecall();
+            pagecall2();
+        }
+
+        function validate() {
+            var isValid = true;
+            if ($('#name').val() === "") {
+                $('#name').css('border-color', 'Red');
+                isValid = false;
+            } else {
+                $('#name').css('border-color', 'lightgrey');
+            }
+            if ($('input[name="faname"]').val()) {
+                $('#faname').css('border-color', 'Red');
+                isValid = false;
+            } else {
+                $('#faname').css('border-color', 'lightgrey');
+            }
+            return isValid;
+        }
+
+        function save() {
+            //debugger;
+            var Pname = $('#name').val();
+            var Pfname = $('#faname').val();
+            var pid = $('#hidid').val();
+            var obj = new Object();
+            obj.TenSuKien = Pname;
+            obj.ThoiGianBatDau = Pfname;
+            obj.Id = pid;
+            //alert("Your Form Data are " + obj.TenSuKien + "&" + obj.ThoiGianBatDau + "\n");
+
+            //if (Pname === null || Pname === undefined &&
+            //    Pfname === null || Pfname === undefined
+            //) {
+            //    alert("Please Fill form ");
+            //}
+            var res = validate();
+            if (res === false) {
+                return false;
+            } else {
+                $.ajax({
+                    url: "@Url.Action("Index", "Event", new {Area = "Admin"})",
+                    type: "post",
+                    data: obj,
+                    success: function(res) {
+                        $('#tbl').html(res);
+                        clearTextBox();
+                        //alert("Submitted");
+                        alert('Bạn đã lưu thông tin thành công');
+                    }
+                });
+            }
+        }
+
+        function pagecall() {
+            $.ajax({
+                url: "@Url.Action("GetList", "Event", new {Area = "Admin"})",
+                type: "get",
+                success: function(res) {
+                    $('#tbl').html(res);
+                }
+            });
+        }
+
+        function pagecall2() {
+            $.ajax({
+                url: "@Url.Action("GetEventActive", "Event", new {Area = "Admin"})",
+                type: "get",
+                success: function(res) {
+                    $('#eventimage').html(res);
+                }
+            });
+        }
+
+        function Del(id) {
+            var sd = new Object();
+            var temp = id;
+            sd.Id = temp;
+            var ans = confirm("Bạn có chắc muốn bỏ kích hoạt không?");
+            if (ans) {
+                $.ajax({
+                    type: "post",
+                    url: "@Url.Action("Delete", "Event", new {Area = "Admin"})",
+                    data: { id: temp },
+                    success: function(res) {
+                        $('#tbl').html(res);
+                        alert('Bạn đã bỏ kích hoạt thông tin thành công');
+                    }
+                });
+            }
+        }
+
+        function clearTextBox() {
+            $('#name').val("");
+            $('input[type="datetime-local"]').val("");
+        }
+
+        function res(id) {
+            var sd = new Object();
+            alert(id);
+            var temp = id;
+            sd.Id = temp;
+            var ans = confirm("Bạn có chắc muốn kích hoạt không?");
+            if (ans) {
+                $.ajax({
+                    type: 'GET',
+                    url: "@Url.Action("Restore", "Event", new {Area = "Admin"})?id=" + temp,
+                    contentType: "application/json;charset=UTF-8",
+                    dataType: "json",
+                    success: function(result) {
+                        $('#tbl').html(res);
+                        alert('Bạn đã kích hoạt thông tin thành công');
+                    }
+                });
+            }
+        }
+        function edt(id) {
+            var sd = new Object();
+            alert(id);
+            var temp = id;
+            sd.Id = temp;
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Action("EditRecode", "Event", new {Area = "Admin"})?id=" + temp,
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function(result) {
+                    debugger;
+                    $("#faname").val(result.date);
+                    $("#name").val(result.name);
+                    $("#hidid").val(result.masanpham);
+                }
+            });
+        }
+    </script>
+}

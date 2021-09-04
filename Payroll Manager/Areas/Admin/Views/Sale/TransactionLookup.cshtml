@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Payroll_Manager.Areas.Admin.Controllers.SaleController.SoWithItems>
+@using Payroll_Manager.Utilities
+@inject UserManager<Payroll_Manager.Persistence.ApplicationUser> _userManager
+@{
+
+    ViewBag.Title = "Tìm kiếm giao dịch";
+}
+
+<environment names="Development,Staging,Production">
+    <link href="~/css/Animated.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Employee.css" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/assets/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+</environment>
+
+<div class="animated fadeIn employee index">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <nav aria-label="breadcrumb">
+                        @* asp-action runs action method name *@
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Tìm kiếm danh sách bán hàng</li>
+                        </ol>
+                    </nav><br /><br />
+                    <div class="row">
+                        <div class="col-lg-12 table-responsive-md">
+                            <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="title"><span><a href="#">15 giao dịch gần đây</a></span></div>
+                                    </div>
+                                </div>
+                                @using (Html.BeginForm("TransactionLookup", "Sale", FormMethod.Get))
+                                {
+                    <b>Lựa chọn tìm kiếm: </b><p style="margin-left: 5px;"></p>
+                                    @Html.RadioButton("option", "Tên nhân viên")<text>&nbspTên nhân viên</text><p style="margin-left: 5px;"></p>
+                                                    @Html.RadioButton("option", "Tên khách hàng")<text>&nbspTên khách hàng</text><p style="margin-left: 5px;"></p>
+                                                                    @Html.TextBox("search")
+                                                                                    <input type="submit"
+                                                                                           name="submit"
+                                                                                           value="Search" style="padding: 10px" class="btn btn-outline-white" />}
+                                <table id="datatable" class="table table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                                    <thead class="thead-light">
+                                        <tr role="row">
+                                            <th class="border-top-0 sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="No: activate to sort column descending">Id</th>
+                                            <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Tên khách hàng</th>
+                                            <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Tên nhân viên</th>
+                                            <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Ngày bán</th>
+                                            <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Tổng sản phẩm</th>
+                                            <th class="border-top-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Tổng tiền</th>
+                                            <th class="border-top-0 text-warning sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending">Hoạt động</th>
+                                            <th class="border-top-0 text-warning sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ var i = 1; }
+                                        @if (!Model.Any())
+                                        {
+                            <tr role="row" class="odd no-data">
+                                <td colspan="8">
+                                    No data
+                                </td>
+                            </tr>
+ }
+                        else
+                        {
+            @foreach (var item in Model)
+            {
+
+<tr role="row" class="odd">
+    <td class="sorting_1">
+        @i
+    </td>
+    <td>
+        @item.S.TenKhachHang
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.S.TenNhanVien)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.S.SaleDateString)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.S.items)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.S.price)
+    </td>
+    <td>
+        @if (item.S.HoatDong.Contains("RET"))
+        {
+<span class="badge badge-danger">@item.S.HoatDong</span> }
+                    else
+                    {
+<span class="badge badge-success">@item.S.HoatDong</span>}
+    </td>
+    <td>
+        <a style="margin-left: 8px" class="text-success" asp-action="Details" asp-route-id="@item.S.SaleId">
+            <i class="fas fa-edit"></i> Xem 
+        </a>
+    @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()))
+    {
+        <a class="text-danger" asp-action="Cancel" asp-route-id="@item.S.SaleId">
+            <i class="far fa-trash-alt"></i> Xóa
+        </a>
+    }
+    </td>
+</tr>
+i++;
+}}
+                                    </tbody>
+                                </table>
+                                <br />
+                                <br />
+                                <a href="/Admin/Sale/Index" class="btn btn-info">Trở về menu thanh toán</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<environment names="Development,Staging,Production">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/assets/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/scripts/jquery.crypto-exchange.init.js"></script>
+</environment>

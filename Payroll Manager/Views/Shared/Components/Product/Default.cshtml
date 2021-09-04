@@ -1,0 +1,36 @@
+﻿@model System.Collections.Generic.List<Payroll_Manager.Entity.ModelForUser.Inventory>
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+            <div class="card mb-5 mb-lg-0">
+                <div class="card-body">
+                    <div id="seler">
+                        <a asp-action="Detail" asp-route-id="@item.ProductId" asp-route-url="@item.Name">                       
+                            <h5 class="card-title text-muted text-uppercase text-center">@item.Name</h5>
+                            </a>
+                        <h6 class="card-price text-center" id="seler-price">@String.Format(info, "{0:c}", item.SalePrice.ToString("N0")) VNĐ</h6>
+                    </div>
+                    <hr>
+                    <ul class="fa-ul">
+                        @Html.Raw(item.Description)
+                        @*<li><span class="fa-li"><i class="fa fa-check"></i></span>Regular Seating</li>
+                        <li><span class="fa-li"><i class="fa fa-check"></i></span>Coffee Break</li>
+                        <li><span class="fa-li"><i class="fa fa-check"></i></span>Custom Badge</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Community Access</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Workshop Access</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>After Party</li>*@
+                    </ul>
+                    <hr>
+                    <div class="text-center">
+                        @*data-toggle="modal" data-target="#buy-ticket-modal" data-ticket-type="standard-access"*@
+                        <a type="button" class="btn" data-toggle="modal" data-target="#buy-ticket-modal" data-ticket-type="standard-access">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

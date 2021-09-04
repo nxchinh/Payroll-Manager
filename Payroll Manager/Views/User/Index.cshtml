@@ -1,0 +1,147 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer SharedLocalizer
+@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+@model Payroll_Manager.Models.EmailSendViewModel
+<header id="header">
+    <div class="container">
+
+        <div id="logo" class="pull-left">
+            <a href="/giaodien1.html" class="scrollto"><img src="~/UserAssets/img/logo.png" alt="" title=""></a>
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="#intro">Home</a></li>
+                <li><a href="#about">@SharedLocalizer["About"]</a></li>
+                <li><a href="#speakers">@SharedLocalizer["Speaker"]</a></li>
+                <li><a href="#gallery">@SharedLocalizer["Event Image"]</a></li>
+                <li><a href="#subscribe">@SharedLocalizer["Subcribe"]</a></li>
+                <li><a href="#contact">@SharedLocalizer["Contact"]</a></li>
+                <li class="buy-tickets">
+                    <a href="#buy-tickets">@SharedLocalizer["Buy Tickets"]</a>
+                </li>
+                <li class="buy-tickets">
+                    <a href="/giaodien2.html" style="background: #1167b1;border: 2px solid #1167b1;">Chuyển giao diện</a>
+                </li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header>
+<section id="intro">
+    <div class="intro-container wow fadeIn">
+        <h1 class="mb-4 pb-0">@SharedLocalizer["THE ANNUAL"]<br><span> @SharedLocalizer["MARKETING CONFERENCE"] </span></h1>
+        <p class="mb-4 pb-0">155 Sư Vạn Hạnh (nối dài), P13, Q.10, TP.HCM</p>
+        <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video"
+           data-autoplay="true"></a>
+        <a href="#about" class="about-btn scrollto">GIỚI THIỆU SỰ KIỆN</a>
+
+    </div>
+</section>
+<main id="main">
+    <section id="about">
+        @await Component.InvokeAsync("EventDetail")
+
+    </section>
+    <section id="speakers" class="wow fadeInUp">
+        @await Component.InvokeAsync("EventSpeaker")
+    </section>
+
+    <!--==========================
+      Gallery Section
+    ============================-->
+    <section id="gallery" class="wow fadeInUp">
+        @await Component.InvokeAsync("Event")
+
+    </section>
+
+
+    <!--==========================
+      Subscribe Section
+    ============================-->
+    <section id="subscribe">
+        <div class="container wow fadeInUp">
+            <div class="section-header">
+                <h2>@SharedLocalizer["NEWSLETTER"]</h2>
+                <p>@SharedLocalizer["Rerum numquam illum recusandae quia mollitia consequatur."]</p>
+            </div>
+            @await Html.PartialAsync("AddEmail3.cshtml", Model)
+
+        </div>
+    </section>
+
+    <!--==========================
+    Buy Ticket Section
+    ============================-->
+
+    <section id="buy-tickets" class="section-with-bg wow fadeInUp">
+        <div class="container">
+            @await Html.PartialAsync("_Info")
+            @*@await Html.PartialAsync("RealTimeTask.cshtml", Model)*@
+            <div class="section-header">
+                <h2>@SharedLocalizer["Buy Tickets"]</h2>
+                <p>@SharedLocalizer["Velit consequatur consequatur inventore iste fugit unde omnis eum aut."]</p>
+            </div>
+
+            @await Component.InvokeAsync("Product")
+        </div>
+        @await Html.PartialAsync("AddEmail.cshtml", Model)
+        <!-- Modal Order Form -->
+        <!-- /.modal -->
+
+    </section>
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact" class="section-bg wow fadeInUp">
+
+        <div class="container">
+
+            <div class="section-header">
+                <h2>@SharedLocalizer["Contact Us"]</h2>
+                <p>@SharedLocalizer["Nihil officia ut sint molestiae tenetur."]</p>
+            </div>
+
+            <div class="row contact-info">
+
+                <div class="col-md-4">
+                    <div class="contact-address">
+                        <i class="ion-ios-location-outline"></i>
+                        <h3>Địa chỉ</h3>
+                        <address>HUFLIT</address>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="contact-phone">
+                        <i class="ion-ios-telephone-outline"></i>
+                        <h3>Số điện thoại</h3>
+                        <p><a href="tel:+155895548855">+1 5589 55488 55</a></p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="contact-email">
+                        <i class="ion-ios-email-outline"></i>
+                        <h3>Email @SharedLocalizer["Create"]</h3>
+                        <p><a href="mailto:info@example.com">info@example.com</a></p>
+                    </div>
+                </div>
+
+            </div>
+            @await Html.PartialAsync("AddEmail2.cshtml", Model)
+
+
+        </div>
+    </section><!-- #contact -->
+
+</main>
+
+@*@section Scripts {
+        <script>
+            $(document).ready(function () {
+            });
+        </script>
+    }*@

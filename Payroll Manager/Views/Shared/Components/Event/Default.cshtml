@@ -1,0 +1,16 @@
+﻿@model System.Collections.Generic.List<Payroll_Manager.Entity.EventImage>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer SharedLocalizer
+<div class="container">
+    <div class="section-header">
+        <h2>@SharedLocalizer["Event"] @ViewBag.TenEvent</h2>
+        <p>@SharedLocalizer["Check our gallery from the recent events"]</p>
+    </div>
+</div>
+
+<div class="owl-carousel gallery-carousel">
+    @foreach (var item in Model)
+    {
+        <a src="~/File/@item.FullName" class="venobox" data-gall="gallery-carousel"><img src="~/File/@item.FullName" alt=""></a>
+    }
+</div>

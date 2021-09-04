@@ -1,0 +1,72 @@
+﻿@model List<Payroll_Manager.Areas.Admin.Models.ThongKeTheoThang>
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+@{ string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }; }
+
+
+<h2>Thống Kê Theo Tháng</h2>
+
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<br />
+<hr style="height:1px; border:none; background-color:black;color:black; opacity:0.2" />
+<br />
+<div class="row">
+    <div class="col-md-12">
+
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Tháng (2020)</th>
+                    <th>Số lượng đơn</th>
+                    <th>Tổng số doanh thu (VNĐ)</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Thang (@Months[item.Thang - 1])</td>
+                    <td>@item.Soluong</td>
+                    <td>@item.TongTien.ToString("N0")</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var chart = new CanvasJS.Chart("chartContainer",
+                {
+                    animationEnabled: true,
+                    theme: "light2", // "light1", "light2", "dark1", "dark2"
+                    title: {
+                        text: "Doanh Thu Hàng Tháng"
+                    },
+                    axisY: {
+                        title: "Doanh thu ($)"
+                    },
+                    data: [
+                        {
+                            type: "column",
+                            showInLegend: true,
+                            legendMarkerColor: "grey",
+                            legendText: "MMbbl = one million barrels",
+                            dataPoints: [
+                                @for (var i = 0; i < 12; i++)
+                                {
+                                    var x = Model.Find(p => p.Thang == i);
+                                    double total = (x == null) ? 0 : x.TongTien;
+                                    @: { y: @total, label: "@Months[i]" },
+                                }
+                            ]
+                        }
+                    ]
+                });
+            chart.render();
+        });
+    </script>
+}
+
+

@@ -1,0 +1,120 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Document.DetailsViewModel
+@using Payroll_Manager.Utilities
+@{ ViewData["Title"] = "Chi tiết tài liệu"; }
+@section Styles{
+    <link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+}
+<div class="row" style="padding: 15px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="card-title">Chi tiết File: @ViewData["Title"] @($"№ {Model.Document.Number} от {Model.Document.Date:dd.MM.yyyy} ({Model.Document.Caption})")</div>
+
+                @if (User.IsInRole(SD.Admin.ToString()))
+                {
+            <a asp-action="Create" class="btn mr-2 mb-2 btn-primary">
+                Tạo File Công việc
+            </a>}
+            <div class="collapse" id="collapseExample123">
+                <div>
+                    <dl class="row">
+                        <dt class="col-sm-4">
+                            Ghi chú:
+                        </dt>
+                        <dd class="col-sm-8">
+                            @(Model.Document.Note ?? "Không có ghi chú")
+                        </dd>
+                        <dt class="col-sm-4">
+                            Số File đăng:
+                        </dt>
+                        <dd class="col-sm-8">
+                            @if(!Model.СurrentUserIsFamiliarized)
+                            {
+                                <ul document-id="@Model.Document.Id" item-class="p-0"></ul>
+ 
+                            }
+                            else
+                            {
+                                @if(User.IsInRole(SD.Admin.ToString()) || Model.Check)
+                                {
+                                    <ul document-id="@Model.Document.Id" item-class="p-0"></ul>
+                                }
+                                else
+                                {
+                                    @*@("Bạn không đủ quyền để xem")*@
+                                    @("Đã có người nhận tài liệu")
+                                }
+
+                            }
+
+                        </dd>
+                        @if (User.IsInRole(SD.Admin.ToString()))
+                        {
+            <dt class="col-sm-4 text-center">
+                Chi tiết người nhận
+            </dt>
+                            <dd class="col-sm-8 text-center">
+                                <a id="openList" href="#" class="stretched-link"><small>Hiện</small></a>
+                                <div id="list" style="display:none">
+                                    <ul class="list-group">
+                                        @foreach (var familiarization in Model.Document.Familiarizations.OrderBy(f => f.DateTime))
+                                        {
+                        <li class="w-100 list-group-item p-1"><Strong>@($"{familiarization.Employee} {familiarization.DateTime:dd.MM.yyyy HH:mm:ss}")</Strong></li>
+}
+                                    </ul>
+                                    <a id="closeList" href="#" class="stretched-link"><small>Ẩn</small></a>
+                                </div>
+                            </dd>
+}
+                    </dl>
+                </div>
+            </div>
+                <div class="card-footer">
+                    <button type="button" data-toggle="collapse" href="#collapseExample123" class="btn btn-primary">Xem chi tiết</button>
+                </div>
+
+
+                    <div>
+                        <form asp-action="Acquainted">
+                            <input type="hidden" name="id" id="id" value="@Model.Document.Id" />
+                            @if (!Model.СurrentUserIsFamiliarized)
+                            {
+                <input type="submit" value="Nhận tài liệu" class="btn btn-primary" /> }
+            else
+            {
+            <input type="submit" value="Đã nhận" class="btn btn-outline-primary" disabled />} |
+                            <a asp-action="List">Trở lại danh sách</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+    $(".custom-file-input").on("change", function (e) {
+            var filenames = [];
+            var files = e.target.files;
+            if (files.length > 1) {
+                filenames.push("Đã chọn (" + files.length + ")");
+            } else {
+                for (let i in files) {
+                    if (files.hasOwnProperty(i)) {
+                        filenames.push(files[i].name);
+                    }
+                }
+            }
+            $(this).siblings(".custom-file-label").addClass("selected").html(filenames.join(","));
+        });
+
+        $("#openList").click(function () {
+            $("#list").show();
+        });
+        $("#closeList").click(function () {
+            $("#list").hide();
+        });</script>
+}

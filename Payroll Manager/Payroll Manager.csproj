@@ -1,0 +1,376 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-Payroll_Manager-8E4BAA96-1CE9-4F2A-8A53-7E8DDE1B4CB7</UserSecretsId>
+    <RootNamespace>Payroll_Manager</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Payroll_Manager</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Admin\Controllers\InventoryController.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="MailKit" Version="2.6.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.14.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.5.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="RotativaCore" Version="3.0.0" />
+    <PackageReference Include="TinyMCE" Version="5.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="WkHtmlToPdf\wkhtmltoimage.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="WkHtmlToPdf\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+    
+  <ItemGroup>
+    <ProjectReference Include="..\Payroll Manager.Entity\Payroll Manager.Entity.csproj" />
+    <ProjectReference Include="..\Payroll Manager.Services\Payroll Manager.Services.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\Profiles\" />
+    <Folder Include="Areas\Admin\Models\VM_Document\" />
+    <Folder Include="Areas\Admin\Views\Account\" />
+    <Folder Include="Areas\Admin\Views\Adminstrator\" />
+    <Folder Include="Areas\Admin\Views\Attendances\" />
+    <Folder Include="Areas\Admin\Views\Chat\" />
+    <Folder Include="Areas\Admin\Views\Company\" />
+    <Folder Include="Areas\Admin\Views\Department\" />
+    <Folder Include="Areas\Admin\Views\Documents\" />
+    <Folder Include="Areas\Admin\Views\File\" />
+    <Folder Include="Areas\Admin\Views\Shared\Components\Search\" />
+    <Folder Include="Attachments\Storage\DOC000000000002\" />
+    <Folder Include="Attachments\Storage\DOC000000000003\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Files\" />
+    <Folder Include="StartupTasks\" />
+    <Folder Include="Storage\" />
+    <Folder Include="Views\Shared\Components\EventDetail\" />
+    <Folder Include="wwwroot\assets\datatables\json\" />
+    <Folder Include="wwwroot\lib\bootstrap\dist\fonts\" />
+    <Folder Include="wwwroot\lib\materialize\css\" />
+    <Folder Include="wwwroot\lib\materialize\fonts\roboto\" />
+    <Folder Include="wwwroot\lib\materialize\js\" />
+    <Folder Include="wwwroot\lib\popper.js\dist\esm\" />
+    <Folder Include="wwwroot\lib\popper.js\dist\umd\" />
+    <Folder Include="wwwroot\lib\popper.js\src\methods\" />
+    <Folder Include="wwwroot\lib\popper.js\src\modifiers\" />
+    <Folder Include="wwwroot\lib\popper.js\src\utils\" />
+    <Folder Include="wwwroot\LoginAssets\css\" />
+    <Folder Include="wwwroot\LoginAssets\img\" />
+    <Folder Include="wwwroot\LoginAssets\js\" />
+    <Folder Include="wwwroot\File\" />
+    <Folder Include="wwwroot\UserAssets2\fonts\" />
+    <Folder Include="wwwroot\UserAssets2\images\" />
+    <Folder Include="wwwroot\UserAssets2\js\" />
+    <Folder Include="wwwroot\UserAssets\contactform\" />
+    <Folder Include="wwwroot\UserAssets\css\" />
+    <Folder Include="wwwroot\UserAssets\img\gallery\" />
+    <Folder Include="wwwroot\UserAssets\img\hotels\" />
+    <Folder Include="wwwroot\UserAssets\img\speakers\" />
+    <Folder Include="wwwroot\UserAssets\img\supporters\" />
+    <Folder Include="wwwroot\UserAssets\img\venue-gallery\" />
+    <Folder Include="wwwroot\UserAssets\js\" />
+    <Folder Include="wwwroot\UserAssets\lib\animate\" />
+    <Folder Include="wwwroot\UserAssets\lib\bootstrap\css\" />
+    <Folder Include="wwwroot\UserAssets\lib\bootstrap\js\" />
+    <Folder Include="wwwroot\UserAssets\lib\easing\" />
+    <Folder Include="wwwroot\UserAssets\lib\font-awesome\css\" />
+    <Folder Include="wwwroot\UserAssets\lib\font-awesome\fonts\" />
+    <Folder Include="wwwroot\UserAssets\lib\jquery\" />
+    <Folder Include="wwwroot\UserAssets\lib\owlcarousel\assets\" />
+    <Folder Include="wwwroot\UserAssets\lib\superfish\" />
+    <Folder Include="wwwroot\UserAssets\lib\venobox\" />
+    <Folder Include="wwwroot\UserAssets\lib\wow\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\Adminstrator\CreateRole.cshtml" />
+    <None Include="Areas\Admin\Views\Adminstrator\EditRole.cshtml" />
+    <None Include="Areas\Admin\Views\Adminstrator\EditUsersInRole.cshtml" />
+    <None Include="Areas\Admin\Views\Adminstrator\ListRoles.cshtml" />
+    <None Include="Areas\Admin\Views\Attendances\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Attendances\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Attendances\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Attendances\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Chat\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Company\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Company\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Company\List.cshtml" />
+    <None Include="Areas\Admin\Views\Department\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Department\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Department\List.cshtml" />
+    <None Include="Areas\Admin\Views\Documents\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Documents\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Documents\Details.cshtml" />
+    <None Include="Areas\Admin\Views\Documents\List.cshtml" />
+    <None Include="Areas\Admin\Views\File\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Users\viewEmp.cshtml" />
+    <None Include="wwwroot\assets\datatables\buttons.bootstrap4.min.js" />
+    <None Include="wwwroot\assets\datatables\buttons.colVis.min.js" />
+    <None Include="wwwroot\assets\datatables\buttons.html5.min.js" />
+    <None Include="wwwroot\assets\datatables\buttons.print.min.js" />
+    <None Include="wwwroot\assets\datatables\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\assets\datatables\dataTables.buttons.min.js" />
+    <None Include="wwwroot\assets\datatables\dataTables.responsive.min.js" />
+    <None Include="wwwroot\assets\datatables\jquery.dataTables.min.js" />
+    <None Include="wwwroot\assets\datatables\jszip.min.js" />
+    <None Include="wwwroot\assets\datatables\pdfmake.min.js" />
+    <None Include="wwwroot\assets\datatables\responsive.bootstrap4.min.js" />
+    <None Include="wwwroot\assets\datatables\vfs_fonts.js" />
+    <None Include="wwwroot\assets\icon\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\assets\icon\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\assets\icon\webfonts\fa-light-300.svg" />
+    <None Include="wwwroot\assets\icon\webfonts\fa-light-300.woff2" />
+    <None Include="wwwroot\assets\icon\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\assets\icon\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\assets\icon\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\assets\icon\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\assets\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\assets\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\assets\fonts\Pe-icon-7-stroke.svg" />
+    <None Include="wwwroot\assets\scripts\main.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Black-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-BlackItalic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Bold-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Bold.woff2" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-BoldItalic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Italic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Light-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Light.woff2" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-LightItalic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Medium-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Medium.woff2" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-MediumItalic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Regular-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Regular.woff2" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Thin-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-Thin.woff2" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\Roboto-ThinItalic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\RobotoCondensed-Bold-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\RobotoCondensed-BoldItalic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\RobotoCondensed-Italic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\RobotoCondensed-Light-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\RobotoCondensed-LightItalic-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\fonts\roboto\RobotoCondensed-Regular-webfont.svg" />
+    <None Include="wwwroot\lib\materialize\js\bootstrap-datetimepicker.js" />
+    <None Include="wwwroot\lib\materialize\js\dataTables.bootstrap.js" />
+    <None Include="wwwroot\lib\materialize\js\dataTables.responsive.js" />
+    <None Include="wwwroot\lib\materialize\js\dataTables.select.js" />
+    <None Include="wwwroot\lib\materialize\js\jquery.dataTables.js" />
+    <None Include="wwwroot\lib\materialize\js\moment-with-locales.js" />
+    <None Include="wwwroot\lib\materialize\js\propeller.js" />
+    <None Include="wwwroot\lib\materialize\js\propeller.min.js" />
+    <None Include="wwwroot\lib\materialize\js\textfield.js" />
+    <None Include="wwwroot\lib\materialize\LICENSE" />
+    <None Include="wwwroot\lib\materialize\README.md" />
+    <None Include="wwwroot\lib\popper.js\dist\esm\popper-utils.js" />
+    <None Include="wwwroot\lib\popper.js\dist\esm\popper-utils.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\esm\popper-utils.min.js" />
+    <None Include="wwwroot\lib\popper.js\dist\esm\popper-utils.min.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\esm\popper.js" />
+    <None Include="wwwroot\lib\popper.js\dist\esm\popper.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\esm\popper.min.js" />
+    <None Include="wwwroot\lib\popper.js\dist\esm\popper.min.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\popper-utils.js" />
+    <None Include="wwwroot\lib\popper.js\dist\popper-utils.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\popper-utils.min.js" />
+    <None Include="wwwroot\lib\popper.js\dist\popper-utils.min.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\popper.js" />
+    <None Include="wwwroot\lib\popper.js\dist\popper.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\popper.min.js" />
+    <None Include="wwwroot\lib\popper.js\dist\popper.min.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper-utils.js" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper-utils.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper-utils.min.js" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper-utils.min.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper.js" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper.js.flow" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper.js.map" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper.min.js" />
+    <None Include="wwwroot\lib\popper.js\dist\umd\popper.min.js.map" />
+    <None Include="wwwroot\lib\popper.js\index.js.flow" />
+    <None Include="wwwroot\lib\popper.js\README.md" />
+    <None Include="wwwroot\lib\popper.js\src\index.js" />
+    <None Include="wwwroot\lib\popper.js\src\methods\defaults.js" />
+    <None Include="wwwroot\lib\popper.js\src\methods\destroy.js" />
+    <None Include="wwwroot\lib\popper.js\src\methods\disableEventListeners.js" />
+    <None Include="wwwroot\lib\popper.js\src\methods\enableEventListeners.js" />
+    <None Include="wwwroot\lib\popper.js\src\methods\placements.js" />
+    <None Include="wwwroot\lib\popper.js\src\methods\update.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\applyStyle.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\arrow.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\computeStyle.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\flip.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\hide.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\index.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\inner.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\keepTogether.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\offset.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\preventOverflow.js" />
+    <None Include="wwwroot\lib\popper.js\src\modifiers\shift.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\clockwise.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\computeAutoPlacement.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\debounce.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\find.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\findCommonOffsetParent.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\findIndex.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getBordersSize.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getBoundaries.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getBoundingClientRect.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getClientRect.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getFixedPositionOffsetParent.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getOffsetParent.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getOffsetRect.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getOffsetRectRelativeToArbitraryNode.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getOppositePlacement.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getOppositeVariation.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getOuterSizes.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getParentNode.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getPopperOffsets.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getReferenceNode.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getReferenceOffsets.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getRoot.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getRoundedOffsets.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getScroll.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getScrollParent.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getStyleComputedProperty.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getSupportedPropertyName.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getViewportOffsetRectRelativeToArtbitraryNode.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getWindow.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\getWindowSizes.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\includeScroll.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\index.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\isBrowser.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\isFixed.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\isFunction.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\isIE.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\isModifierEnabled.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\isModifierRequired.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\isNumeric.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\isOffsetContainer.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\removeEventListeners.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\runModifiers.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\setAttributes.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\setStyles.js" />
+    <None Include="wwwroot\lib\popper.js\src\utils\setupEventListeners.js" />
+    <None Include="wwwroot\LoginAssets\img\avatar.svg" />
+    <None Include="wwwroot\LoginAssets\img\bg.svg" />
+    <None Include="wwwroot\LoginAssets\js\main.js" />
+    <None Include="wwwroot\UserAssets2\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\UserAssets2\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\UserAssets2\js\bootstrap.min.js" />
+    <None Include="wwwroot\UserAssets2\js\custom.js" />
+    <None Include="wwwroot\UserAssets2\js\jquery.js" />
+    <None Include="wwwroot\UserAssets2\js\jquery.parallax.js" />
+    <None Include="wwwroot\UserAssets2\js\owl.carousel.min.js" />
+    <None Include="wwwroot\UserAssets2\js\smoothscroll.js" />
+    <None Include="wwwroot\UserAssets2\js\wow.min.js" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\lib\popper.js\index.d.ts" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="wwwroot\js\site.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\site.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES2015</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+</Project>

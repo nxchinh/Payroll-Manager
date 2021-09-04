@@ -1,0 +1,196 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>TheEvent - Bootstrap Event Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <link href="~/UserAssets/img/favicon.png" rel="icon">
+    <link href="~/UserAssets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
+    <link href="~/UserAssets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/UserAssets/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/UserAssets/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/UserAssets/lib/venobox/venobox.css" rel="stylesheet">
+    <link href="~/UserAssets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/UserAssets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    
+@RenderBody()
+<!--==========================
+Footer
+============================-->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <partial name="_SelectLanguagePartial" />
+                @*@await Html.PartialAsync("_SelectLanguagePartial")*@
+                <div class="col-lg-3 col-md-6 footer-info">
+                    <img src="~/UserAssets/img/logo.png" alt="TheEvenet">
+                    <p>In alias aperiam. Placeat tempore facere. Officiis voluptate ipsam vel eveniet est dolor et totam porro. Perspiciatis ad omnis fugit molestiae recusandae possimus. Aut consectetur id quis. In inventore consequatur ad voluptate cupiditate debitis accusamus repellat cumque.</p>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>
+                        A108 Adam Street <br>
+                        New York, NY 535022<br>
+                        United States <br>
+                        <strong>Phone:</strong> +1 5589 55488 55<br>
+                        <strong>Email:</strong> info@example.com<br>
+                    </p>
+
+                    <div class="social-links">
+                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                        <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                        <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong>TheEvent</strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+    </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script src="~/UserAssets/lib/jquery/jquery.min.js"></script>
+<script src="~/UserAssets/lib/jquery/jquery-migrate.min.js"></script>
+<script src="~/UserAssets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/UserAssets/lib/easing/easing.min.js"></script>
+<script src="~/UserAssets/lib/superfish/hoverIntent.js"></script>
+<script src="~/UserAssets/lib/superfish/superfish.min.js"></script>
+<script src="~/UserAssets/lib/wow/wow.min.js"></script>
+<script src="~/UserAssets/lib/venobox/venobox.min.js"></script>
+<script src="~/UserAssets/lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Form JavaScript File -->
+<script src="~/UserAssets/contactform/contactform.js"></script>
+<!-- Template Main Javascript File -->
+<script src="~/UserAssets/js/main.js"></script>
+<script type="text/javascript" src="~/lib/microsoft/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
+<script>
+    window.onload = function() {
+        var element = document.getElementById('alertbill');
+        if (!element) {
+            //alert("Element does not exist. Let's create it.");
+        } else {
+            location.href = "#buy-tickets";
+        }
+
+    };
+</script>
+<script>
+    var hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/auction")
+        .build();
+
+    var productId = document.getElementById("productid").value;
+
+    hubConnection.on(productId.toString(),
+        function(price) {
+
+            var a = price;
+            document.getElementById('seler-price').innerHTML = "Lượt người yêu thích: " + price;
+
+            if (price === 0)
+                document.getElementById('seler').hidden = true;
+            event.preventDefault(); // Hide buy possibility
+
+        });
+    document.getElementById("addProductBtn").addEventListener("click",
+        function(event) {
+            var luotdat = document.getElementById("productPrice").value;
+            hubConnection.invoke("SendAsync", productId, luotdat).catch(function(err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        });
+    hubConnection.start().catch(function(err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+</script>
+@RenderSection("Scripts", required: false)
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#buttonDemo4').click(function() {
+            var name = $('#tensanpham').val();
+            var email = $('#emailsanpham').val();
+            var phone = $('#dienthoaisanpham').val();
+            var quality = $('#soluongsanpham').val();
+            var inventory = $('#InventoriesId').val();
+            var obj = new Object();
+            obj.Name = name;
+            obj.Email = email;
+            obj.Phone = phone;
+            obj.Quatity = quality;
+            obj.InventoriesId = inventory;
+            alert(obj.Name + obj.Email + obj.Phone + obj.Quatity + obj.InventoriesId);
+            $.ajax({
+                url: "@Url.Action("AddEmailTest", "User")",
+                type: "post",
+                data: obj,
+                beforeSend: function () { alert("Hệ thống kiểm tra đang hoạt động"); },
+                success: function (result) {
+                    if (result.name === "True") {
+                        alert("Kiểm tra lại email");
+                        document.location.reload();
+                    } else {
+                        alert("Số lượng sản phẩm vượt quá quy định");
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+</body>
+
+</html>

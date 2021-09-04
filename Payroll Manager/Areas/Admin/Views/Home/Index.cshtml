@@ -1,0 +1,479 @@
+﻿@model List<Payroll_Manager.Areas.Admin.Models.ThongKeTheoThang>
+@using Microsoft.AspNetCore.Identity
+@using Payroll_Manager.Utilities
+@inject UserManager<Payroll_Manager.Persistence.ApplicationUser> _userManager
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+@{ string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }; }
+
+@section Styles{
+    <link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+}
+<div class="page-content" id="printDT">
+<div class="container-fluid">
+<!-- Page-Title -->
+<div class="page-title-box">
+    <h4 class="page-title" style="font-weight: bolder;">Hệ thống quản lý EventNet. Chúc một ngày làm việc vui vẻ !! </h4>
+</div>
+<div class="row">
+    <div class="current-time col-12 col-md-8 col-lg-4">
+        <small>Đồng hồ:</small>
+        <div class="font-weight-bold" id="current-time" style="font-size: 2.0rem;"></div>
+    </div>
+@if (User.IsInRole(SD.Hr.ToString()) || User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()))
+{
+    <button style="padding: 10px; margin: 10px;" onclick="location.href = '@Url.Action("Index", "Attendances", new {Area = "Admin"})'" class="mb-2 mr-2 btn btn-primary btn-lg btn-block">
+        Đi tới điểm danh
+    </button>
+}
+</div>
+@if (User.IsInRole(SD.Hr.ToString()) || User.IsInRole(SD.Admin.ToString()))
+{
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <div class="float-right">
+                    <div class="box-footer">
+                        <button id="btnInDT" style="float: right;" class="btn btn-info"><i class="fa fa-print" aria-hidden="true"></i> In báo cáo</button>
+                    </div>
+                </div>
+                <h4 class="page-title"><b>Báo cáo</b></h4>
+            </div><!--end page-title-box-->
+        </div><!--end col-->
+    </div>
+    <hr style="margin-bottom: 1rem;">
+    <h2 class="table-text">Tổng quan trong tháng</h2>
+    <div class="row">
+        <div class="col-12">
+        </div>
+        <div class="col-lg-3">
+            <div class="card card-eco">
+                <div class="card-body">
+                    <h4 class="title-text mt-0">Bán hôm nay</h4>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="text-purple">@ViewBag.Today Sản Phẩm</h6>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="col-lg-3">
+            <div class="card card-eco">
+                <div class="card-body">
+                    <h4 class="title-text mt-0">Bán tháng này</h4>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="text-pink">@ViewBag.ThisMonth</h6>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="col-lg-3">
+            <div class="card card-eco">
+                <div class="card-body">
+                    <h4 class="title-text mt-0">Tổng Tiền tháng</h4>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="text-secondary">@ViewBag.TotalMoneyMonth đ</h6>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="col-lg-3">
+            <div class="card card-eco">
+                <div class="card-body">
+                    <h4 class="title-text mt-0">Trung Bình tháng</h4>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="text-warning">@ViewBag.AverageMoneyMonth đ</h6>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div>
+    <hr style="margin-bottom: 1rem;">
+    <h2 class="table-text">Tổng quan doanh thu của công ty</h2>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="icon-contain">
+                        <div class="row">
+                            <div class="col-8 align-self-center">
+                                <h5 style="color: #303e67;" class="">Khách hàng</h5>
+                                <p class="text-muted mb-0">@ViewBag.KhachHang <i class="mdi mdi-menu-up text-success font-16"></i></p>
+                            </div><!--end col-->
+                            <div class="col-4 drop-shadow">
+                                <span class="peity-bar" data-peity="{ &quot;fill&quot;: [&quot;#e0e7fd&quot;, &quot;#4d79f6&quot;]}" data-width="100%" data-height="60" style="display: none;">6,2,8,4,3,8,1,3,6,5,9,2,8,1,4,8,9,8,2,1</span><svg class="peity" height="60" width="100%"><rect data-value="6" fill="#e0e7fd" x="0.38382800000000006" y="20" width="3.0706240000000005" height="40"></rect><rect data-value="2" fill="#4d79f6" x="4.222108" y="46.66666666666667" width="3.0706240000000005" height="13.333333333333329"></rect><rect data-value="8" fill="#e0e7fd" x="8.060388" y="6.666666666666671" width="3.0706240000000022" height="53.33333333333333"></rect><rect data-value="4" fill="#4d79f6" x="11.898668" y="33.333333333333336" width="3.0706240000000005" height="26.666666666666664"></rect><rect data-value="3" fill="#e0e7fd" x="15.736948000000002" y="40" width="3.0706239999999987" height="20"></rect><rect data-value="8" fill="#4d79f6" x="19.575228000000003" y="6.666666666666671" width="3.0706239999999987" height="53.33333333333333"></rect><rect data-value="1" fill="#e0e7fd" x="23.413508" y="53.333333333333336" width="3.070624000000006" height="6.666666666666664"></rect><rect data-value="3" fill="#4d79f6" x="27.251787999999998" y="40" width="3.070624000000006" height="20"></rect><rect data-value="6" fill="#e0e7fd" x="31.090068000000002" y="20" width="3.0706240000000022" height="40"></rect><rect data-value="5" fill="#4d79f6" x="34.928348" y="26.666666666666664" width="3.0706240000000022" height="33.333333333333336"></rect><rect data-value="9" fill="#e0e7fd" x="38.766628000000004" y="0" width="3.0706240000000022" height="60"></rect><rect data-value="2" fill="#4d79f6" x="42.604908" y="46.66666666666667" width="3.0706240000000022" height="13.333333333333329"></rect><rect data-value="8" fill="#e0e7fd" x="46.443188000000006" y="6.666666666666671" width="3.0706240000000022" height="53.33333333333333"></rect><rect data-value="1" fill="#4d79f6" x="50.281468000000004" y="53.333333333333336" width="3.0706240000000022" height="6.666666666666664"></rect><rect data-value="4" fill="#e0e7fd" x="54.119748" y="33.333333333333336" width="3.0706240000000022" height="26.666666666666664"></rect><rect data-value="8" fill="#4d79f6" x="57.958028" y="6.666666666666671" width="3.0706240000000093" height="53.33333333333333"></rect><rect data-value="9" fill="#e0e7fd" x="61.79630800000001" y="0" width="3.070623999999981" height="60"></rect><rect data-value="8" fill="#4d79f6" x="65.63458800000001" y="6.666666666666671" width="3.070623999999981" height="53.33333333333333"></rect><rect data-value="2" fill="#e0e7fd" x="69.47286800000002" y="46.66666666666667" width="3.070623999999981" height="13.333333333333329"></rect><rect data-value="1" fill="#4d79f6" x="73.31114800000002" y="53.333333333333336" width="3.070623999999981" height="6.666666666666664"></rect></svg>
+                            </div><!--end col-->
+                        </div> <!--end row-->
+                    </div><!--end icon-contain-->
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="icon-contain">
+                        <div class="row">
+                            <div class="col-8 align-self-center">
+                                <h5 style="color: #303e67;" class="">Số lượng vé đã bán</h5>
+                                <p class="text-muted mb-0">@ViewBag.SanPhamBanDuoc <i class="mdi mdi-menu-up text-success font-16"></i></p>
+                            </div><!--end col-->
+                            <div class="col-4 drop-shadow">
+                                <span class="peity-bar" data-peity="{ &quot;fill&quot;: [&quot;#e0e7fd&quot;, &quot;#4d79f6&quot;]}" data-width="100%" data-height="60" style="display: none;">6,2,8,4,3,8,1,3,6,5,9,2,8,1,4,8,9,8,2,1</span><svg class="peity" height="60" width="100%"><rect data-value="6" fill="#e0e7fd" x="0.38382800000000006" y="20" width="3.0706240000000005" height="40"></rect><rect data-value="2" fill="#4d79f6" x="4.222108" y="46.66666666666667" width="3.0706240000000005" height="13.333333333333329"></rect><rect data-value="8" fill="#e0e7fd" x="8.060388" y="6.666666666666671" width="3.0706240000000022" height="53.33333333333333"></rect><rect data-value="4" fill="#4d79f6" x="11.898668" y="33.333333333333336" width="3.0706240000000005" height="26.666666666666664"></rect><rect data-value="3" fill="#e0e7fd" x="15.736948000000002" y="40" width="3.0706239999999987" height="20"></rect><rect data-value="8" fill="#4d79f6" x="19.575228000000003" y="6.666666666666671" width="3.0706239999999987" height="53.33333333333333"></rect><rect data-value="1" fill="#e0e7fd" x="23.413508" y="53.333333333333336" width="3.070624000000006" height="6.666666666666664"></rect><rect data-value="3" fill="#4d79f6" x="27.251787999999998" y="40" width="3.070624000000006" height="20"></rect><rect data-value="6" fill="#e0e7fd" x="31.090068000000002" y="20" width="3.0706240000000022" height="40"></rect><rect data-value="5" fill="#4d79f6" x="34.928348" y="26.666666666666664" width="3.0706240000000022" height="33.333333333333336"></rect><rect data-value="9" fill="#e0e7fd" x="38.766628000000004" y="0" width="3.0706240000000022" height="60"></rect><rect data-value="2" fill="#4d79f6" x="42.604908" y="46.66666666666667" width="3.0706240000000022" height="13.333333333333329"></rect><rect data-value="8" fill="#e0e7fd" x="46.443188000000006" y="6.666666666666671" width="3.0706240000000022" height="53.33333333333333"></rect><rect data-value="1" fill="#4d79f6" x="50.281468000000004" y="53.333333333333336" width="3.0706240000000022" height="6.666666666666664"></rect><rect data-value="4" fill="#e0e7fd" x="54.119748" y="33.333333333333336" width="3.0706240000000022" height="26.666666666666664"></rect><rect data-value="8" fill="#4d79f6" x="57.958028" y="6.666666666666671" width="3.0706240000000093" height="53.33333333333333"></rect><rect data-value="9" fill="#e0e7fd" x="61.79630800000001" y="0" width="3.070623999999981" height="60"></rect><rect data-value="8" fill="#4d79f6" x="65.63458800000001" y="6.666666666666671" width="3.070623999999981" height="53.33333333333333"></rect><rect data-value="2" fill="#e0e7fd" x="69.47286800000002" y="46.66666666666667" width="3.070623999999981" height="13.333333333333329"></rect><rect data-value="1" fill="#4d79f6" x="73.31114800000002" y="53.333333333333336" width="3.070623999999981" height="6.666666666666664"></rect></svg>
+                            </div><!--end col-->
+                        </div> <!--end row-->
+                    </div><!--end icon-contain-->
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="icon-contain">
+                        <div class="row">
+                            <div class="col-8 align-self-center">
+                                <h5 class="">Thành viên</h5>
+                                <p class="text-muted mb-0">@ViewBag.ThanhVien <i class="mdi mdi-menu-up text-success font-16"></i></p>
+                            </div><!--end col-->
+                            <div class="col-4 text-right drop-shadow">
+                                <span class="peity-donut " data-peity="{ &quot;fill&quot;: [&quot;#4d79f6&quot;, &quot;#e0e7fd&quot;], &quot;innerRadius&quot;: 23, &quot;radius&quot;: 32 }" data-width="60" data-height="60" style="display: none;">226,134</span><svg class="peity" height="60" width="60"><path d="M 30.000000000000004 0 A 30 30 0 1 1 8.41980598984047 50.83975111376992 L 13.455184592211026 45.97714252055694 A 23 23 0 1 0 30 7" data-value="226" fill="#4d79f6"></path><path d="M 8.41980598984047 50.83975111376992 A 30 30 0 0 1 29.999999999999993 0 L 29.999999999999996 7 A 23 23 0 0 0 13.455184592211026 45.97714252055694" data-value="134" fill="#e0e7fd"></path></svg>
+                            </div><!--end col-->
+                        </div> <!--end row-->
+                    </div><!--end icon-contain-->
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="icon-contain">
+                        <div class="row">
+                            <div class="col-8 align-self-center">
+                                <h5 style="color: #303e67;" class="">Tổng đơn : @ViewBag.TongDonHang đơn</h5>
+                                <p class="text-muted mb-0">Online: @ViewBag.TongDonHangOnline đơn <i class="mdi mdi-menu-up text-success font-16"></i></p>
+                                <p class="text-muted mb-0">Offline: @ViewBag.TongDonHangOffline đơn <i class="mdi mdi-menu-up text-success font-16"></i></p>
+                            </div><!--end col-->
+                            <div class="col-4 drop-shadow">
+                                <span class="peity-bar" data-peity="{ &quot;fill&quot;: [&quot;#e0e7fd&quot;, &quot;#4d79f6&quot;]}" data-width="100%" data-height="60" style="display: none;">6,2,8,4,3,8,1,3,6,5,9,2,8,1,4,8,9,8,2,1</span><svg class="peity" height="60" width="100%"><rect data-value="6" fill="#e0e7fd" x="0.38382800000000006" y="20" width="3.0706240000000005" height="40"></rect><rect data-value="2" fill="#4d79f6" x="4.222108" y="46.66666666666667" width="3.0706240000000005" height="13.333333333333329"></rect><rect data-value="8" fill="#e0e7fd" x="8.060388" y="6.666666666666671" width="3.0706240000000022" height="53.33333333333333"></rect><rect data-value="4" fill="#4d79f6" x="11.898668" y="33.333333333333336" width="3.0706240000000005" height="26.666666666666664"></rect><rect data-value="3" fill="#e0e7fd" x="15.736948000000002" y="40" width="3.0706239999999987" height="20"></rect><rect data-value="8" fill="#4d79f6" x="19.575228000000003" y="6.666666666666671" width="3.0706239999999987" height="53.33333333333333"></rect><rect data-value="1" fill="#e0e7fd" x="23.413508" y="53.333333333333336" width="3.070624000000006" height="6.666666666666664"></rect><rect data-value="3" fill="#4d79f6" x="27.251787999999998" y="40" width="3.070624000000006" height="20"></rect><rect data-value="6" fill="#e0e7fd" x="31.090068000000002" y="20" width="3.0706240000000022" height="40"></rect><rect data-value="5" fill="#4d79f6" x="34.928348" y="26.666666666666664" width="3.0706240000000022" height="33.333333333333336"></rect><rect data-value="9" fill="#e0e7fd" x="38.766628000000004" y="0" width="3.0706240000000022" height="60"></rect><rect data-value="2" fill="#4d79f6" x="42.604908" y="46.66666666666667" width="3.0706240000000022" height="13.333333333333329"></rect><rect data-value="8" fill="#e0e7fd" x="46.443188000000006" y="6.666666666666671" width="3.0706240000000022" height="53.33333333333333"></rect><rect data-value="1" fill="#4d79f6" x="50.281468000000004" y="53.333333333333336" width="3.0706240000000022" height="6.666666666666664"></rect><rect data-value="4" fill="#e0e7fd" x="54.119748" y="33.333333333333336" width="3.0706240000000022" height="26.666666666666664"></rect><rect data-value="8" fill="#4d79f6" x="57.958028" y="6.666666666666671" width="3.0706240000000093" height="53.33333333333333"></rect><rect data-value="9" fill="#e0e7fd" x="61.79630800000001" y="0" width="3.070623999999981" height="60"></rect><rect data-value="8" fill="#4d79f6" x="65.63458800000001" y="6.666666666666671" width="3.070623999999981" height="53.33333333333333"></rect><rect data-value="2" fill="#e0e7fd" x="69.47286800000002" y="46.66666666666667" width="3.070623999999981" height="13.333333333333329"></rect><rect data-value="1" fill="#4d79f6" x="73.31114800000002" y="53.333333333333336" width="3.070623999999981" height="6.666666666666664"></rect></svg>
+                            </div><!--end col-->
+                        </div> <!--end row-->
+                    </div><!--end icon-contain-->
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="icon-contain">
+                        <div class="row">
+                            <div class="col-8 align-self-center">
+                                <h5 class="">@ViewBag.TongDoanhThu (VNĐ)</h5>
+                                <p class="text-muted mb-0"> Doanh thu bán Online: @ViewBag.TongDoanhThuSale đồng <i class="mdi mdi-menu-down text-danger font-16"></i></p>
+                                <p class="text-muted mb-0">Doanh thu bán Offline: @ViewBag.TongDoanhThuPaid đồng <i class="mdi mdi-menu-down text-danger font-16"></i></p>
+                            </div><!--end col-->
+                            <div class="col-4 drop-shadow"><span class="peity-line" data-width="100%" data-peity="{ &quot;fill&quot;: [&quot;#c3f0ff&quot;],&quot;stroke&quot;: [&quot;#4ac7ec&quot;]}" data-height="60" style="display: none;">6,2,8,4,3,8,1,3,6,5,9,2,8,1,4,8,9,8,2,1</span><svg class="peity" height="60" width="100%"><polygon fill="#c3f0ff" points="0 59.5 0 20.16666666666667 4.040294736842106 46.388888888888886 8.080589473684212 7.055555555555557 12.120884210526317 33.27777777777778 16.161178947368423 39.833333333333336 20.20147368421053 7.055555555555557 24.241768421052633 52.94444444444444 28.28206315789474 39.833333333333336 32.32235789473685 20.16666666666667 36.36265263157895 26.72222222222222 40.40294736842106 0.5 44.44324210526317 46.388888888888886 48.483536842105266 7.055555555555557 52.52383157894737 52.94444444444444 56.56412631578948 33.27777777777778 60.60442105263159 7.055555555555557 64.6447157894737 0.5 68.68501052631579 7.055555555555557 72.7253052631579 46.388888888888886 76.7656 52.94444444444444 76.7656 59.5"></polygon><polyline fill="none" points="0 20.16666666666667 4.040294736842106 46.388888888888886 8.080589473684212 7.055555555555557 12.120884210526317 33.27777777777778 16.161178947368423 39.833333333333336 20.20147368421053 7.055555555555557 24.241768421052633 52.94444444444444 28.28206315789474 39.833333333333336 32.32235789473685 20.16666666666667 36.36265263157895 26.72222222222222 40.40294736842106 0.5 44.44324210526317 46.388888888888886 48.483536842105266 7.055555555555557 52.52383157894737 52.94444444444444 56.56412631578948 33.27777777777778 60.60442105263159 7.055555555555557 64.6447157894737 0.5 68.68501052631579 7.055555555555557 72.7253052631579 46.388888888888886 76.7656 52.94444444444444" stroke="#4ac7ec" stroke-width="1" stroke-linecap="square"></polyline></svg></div><!--end col-->
+                        </div> <!--end row-->
+                    </div><!--end icon-contain-->
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="icon-contain">
+                        <div class="row">
+                            <div class="col-8 align-self-center">
+                                <h5 style="color: #303e67;" class="">Khách hàng</h5>
+                                <p class="text-muted mb-0">@ViewBag.KhachHang <i class="mdi mdi-menu-up text-success font-16"></i></p>
+                            </div><!--end col-->
+                            <div class="col-4 drop-shadow">
+                                <span class="peity-bar" data-peity="{ &quot;fill&quot;: [&quot;#e0e7fd&quot;, &quot;#4d79f6&quot;]}" data-width="100%" data-height="60" style="display: none;">6,2,8,4,3,8,1,3,6,5,9,2,8,1,4,8,9,8,2,1</span><svg class="peity" height="60" width="100%"><rect data-value="6" fill="#e0e7fd" x="0.38382800000000006" y="20" width="3.0706240000000005" height="40"></rect><rect data-value="2" fill="#4d79f6" x="4.222108" y="46.66666666666667" width="3.0706240000000005" height="13.333333333333329"></rect><rect data-value="8" fill="#e0e7fd" x="8.060388" y="6.666666666666671" width="3.0706240000000022" height="53.33333333333333"></rect><rect data-value="4" fill="#4d79f6" x="11.898668" y="33.333333333333336" width="3.0706240000000005" height="26.666666666666664"></rect><rect data-value="3" fill="#e0e7fd" x="15.736948000000002" y="40" width="3.0706239999999987" height="20"></rect><rect data-value="8" fill="#4d79f6" x="19.575228000000003" y="6.666666666666671" width="3.0706239999999987" height="53.33333333333333"></rect><rect data-value="1" fill="#e0e7fd" x="23.413508" y="53.333333333333336" width="3.070624000000006" height="6.666666666666664"></rect><rect data-value="3" fill="#4d79f6" x="27.251787999999998" y="40" width="3.070624000000006" height="20"></rect><rect data-value="6" fill="#e0e7fd" x="31.090068000000002" y="20" width="3.0706240000000022" height="40"></rect><rect data-value="5" fill="#4d79f6" x="34.928348" y="26.666666666666664" width="3.0706240000000022" height="33.333333333333336"></rect><rect data-value="9" fill="#e0e7fd" x="38.766628000000004" y="0" width="3.0706240000000022" height="60"></rect><rect data-value="2" fill="#4d79f6" x="42.604908" y="46.66666666666667" width="3.0706240000000022" height="13.333333333333329"></rect><rect data-value="8" fill="#e0e7fd" x="46.443188000000006" y="6.666666666666671" width="3.0706240000000022" height="53.33333333333333"></rect><rect data-value="1" fill="#4d79f6" x="50.281468000000004" y="53.333333333333336" width="3.0706240000000022" height="6.666666666666664"></rect><rect data-value="4" fill="#e0e7fd" x="54.119748" y="33.333333333333336" width="3.0706240000000022" height="26.666666666666664"></rect><rect data-value="8" fill="#4d79f6" x="57.958028" y="6.666666666666671" width="3.0706240000000093" height="53.33333333333333"></rect><rect data-value="9" fill="#e0e7fd" x="61.79630800000001" y="0" width="3.070623999999981" height="60"></rect><rect data-value="8" fill="#4d79f6" x="65.63458800000001" y="6.666666666666671" width="3.070623999999981" height="53.33333333333333"></rect><rect data-value="2" fill="#e0e7fd" x="69.47286800000002" y="46.66666666666667" width="3.070623999999981" height="13.333333333333329"></rect><rect data-value="1" fill="#4d79f6" x="73.31114800000002" y="53.333333333333336" width="3.070623999999981" height="6.666666666666664"></rect></svg>
+                            </div><!--end col-->
+                        </div> <!--end row-->
+                    </div><!--end icon-contain-->
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </div><!--end col-->
+    </div>
+    <!-- end page title end breadcrumb -->
+    <div class="row">
+        <div class="col-lg-6 align-self-center">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-0">Doanh thu bán hàng online tuần trước</h4>
+                    <div class="" style="position: relative;">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+            <!--end card-->
+        </div>
+        <div class="col-lg-6 align-self-center">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-0">Doanh thu Doanh thu bán hàng online tuần</h4>
+                    <div class="" style="position: relative;">
+                        <canvas id="BarChart"></canvas>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+            <!--end card-->
+        </div>
+
+    </div>
+    <!--end row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-0 mb-4">Doanh thu theo tháng</h4>
+                    <div class="col-md-6" id="chartContainer" style="height: 370px; max-width: 920px; margin: 20px auto; position: relative;"></div>
+                </div><!--end card-body-->
+
+            </div><!--end card-->
+        </div><!--end col-->
+        <div class="float-right col-md-6">
+            <div class="box-footer">
+                <button id="buttonDemo1" style="float: right;" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Xem chi tiết doanh thu </button>
+            </div>
+        </div>
+        <div class="col-lg-12" id="table-list">
+            <h3 class="col-md-6">Loading...</h3>
+        </div>
+    </div>
+}
+</div>
+    
+
+
+</div>
+
+@section Scripts{
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#buttonDemo1').click(function () {
+                $.ajax({
+                    url: '@Url.Action("List", "Home", new { Area = "Admin" })',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#table-list").html(result);
+                    },
+                    error: function (err) {
+                        $("#table-list").html(err);
+                    }
+                });
+            });
+
+
+        });
+    </script>
+    <script>
+        $(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/Admin/Home/GetBarData",
+                success: function (results) {
+                    var labels = [];
+                    var data = [];
+                    results.forEach(function (result) {
+                        labels.push(result.month);
+                        data.push(result.count);
+                    });
+                    console.log(data);
+                    var bar = document.getElementById('BarChart').getContext('2d');
+                    var chart = new Chart(bar, {
+                        // the type of chart we want to create
+                        type: 'bar',
+
+                        // the data for our datasets
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Mua tuần này',
+                                    backgroundColor: [
+                                        'rgba(12, 24, 242, 0.5)',
+                                        'rgba(12, 24, 242, 0.5)',
+                                        'rgba(12, 24, 242, 0.5)',
+                                        'rgba(12, 24, 242, 0.5)',
+                                        'rgba(12, 24, 242, 0.5)',
+                                        'rgba(12, 24, 242, 0.5)',
+                                        'rgba(12, 24, 242, 0.5)',
+                                        'rgba(0, 255, 0)',
+                                        'rgba(0, 0, 255)',
+                                        'rgba(192, 192, 192)',
+                                        'rgba(255, 255, 0)',
+                                        'rgba(255, 0, 255)'
+                                    ],
+                                    borderColor: [
+                                    ],
+                                    data: data
+                                }
+                            ]
+                        },
+
+                        // configuration options go here
+                        options: {
+
+                        }
+                    });
+
+
+                },
+                error: function () {
+                    console.log("test");
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "/Admin/Home/GetBarData2",
+                success: function (results) {
+                    var labels = [];
+                    var data = [];
+                    results.forEach(function (result) {
+                        labels.push(result.month);
+                        data.push(result.count);
+                    });
+                    console.log(data);
+                    var bar = document.getElementById('myChart').getContext('2d');
+                    var chart = new Chart(bar, {
+                        // the type of chart we want to create
+                        type: 'bar',
+
+                        // the data for our datasets
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Mua tuần trước',
+                                    backgroundColor: [
+                                        'rgba(0, 148, 255, 0.5)',
+                                        'rgba(0, 148, 255, 0.5)',
+                                        'rgba(0, 148, 255, 0.5)',
+                                        'rgba(0, 148, 255, 0.5)',
+                                        'rgba(0, 148, 255, 0.5)',
+                                        'rgba(0, 148, 255, 0.5)',
+                                        'rgba(0, 148, 255, 0.5)',
+                                        'rgba(0, 255, 0)',
+                                        'rgba(0, 0, 255)',
+                                        'rgba(192, 192, 192)',
+                                        'rgba(255, 255, 0)',
+                                        'rgba(255, 0, 255)'
+                                    ],
+                                    borderColor: [
+                                    ],
+                                    data: data
+                                }
+                            ]
+                        },
+
+                        // configuration options go here
+                        options: {
+
+                        }
+                    });
+
+
+                },
+                error: function () {
+                    console.log("test");
+                }
+            });
+        });
+
+
+    </script>
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                GetList();
+            });
+            function GetList() {
+                $.ajax({
+                    url: '@Url.Action("List", "Home", new { Area = "Admin" })',
+                    type: 'GET',
+                    success: function (result) {
+                        $("#table-list").html(result);
+                    },
+                    error: function (err) {
+                        $("#table-list").html(err);
+                    }
+                });
+            }
+        </script>*@
+    <script>
+        $(document).ready(function() {
+            var chart = new CanvasJS.Chart("chartContainer",
+                {
+                    animationEnabled: true,
+                    theme: "light1", // "light1", "light2", "dark1", "dark2"
+                    title: {
+                        text: "Doanh Thu Hàng Tháng"
+                    },
+                    axisY: {
+                        title: "Doanh thu (VNĐ)"
+                    },
+                    data: [
+                        {
+                            type: "column",
+                            showInLegend: true,
+                            legendMarkerColor: "grey",
+                            legendText: "Doanh thu bán sản phẩm của nhân viên",
+                            dataPoints: [
+                                @for (var i = 0; i < 12; i++)
+                                {
+                                    var x = Model.Find(p => p.Thang - 1 == i);
+                                    double total = (x == null) ? 0 : x.TongTien;
+                                    @: { y: @total, label: "@Months[i]" },
+                                }
+                            ]
+                        }
+                    ]
+                });
+            chart.render();
+        });
+    </script>
+    <script type="text/javascript">
+        function printDiv(divName) {
+            var contents = document.getElementById(divName).innerHTML;
+            var frame1 = document.createElement('iframe');
+            frame1.name = "frame1";
+            frame1.style.position = "absolute";
+            frame1.style.top = "-1000000px";
+            document.body.appendChild(frame1);
+            var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html><head><title>DIV Contents</title>');
+            frameDoc.document.write('</head><body>');
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                document.body.removeChild(frame1);
+            }, 500);
+            return false;
+        }
+    </script>
+    <script>
+        var now = new Date('2020-10-20T' + '@ViewBag.ThoiGian' + 'Z');
+        startTime();
+        function startTime() {
+            document.getElementById('current-time').innerHTML = now.toLocaleTimeString();
+            var s = now.getSeconds();
+            now.setSeconds(s + 1);
+            setTimeout(startTime, 1000);
+        }
+    </script>
+    <script>
+        $("#btnInDT").click(function () {
+            printDiv('printDT');
+        });
+    </script>
+}

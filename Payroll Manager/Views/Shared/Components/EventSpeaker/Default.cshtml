@@ -1,0 +1,30 @@
+﻿@model System.Collections.Generic.List<Payroll_Manager.Entity.Employee>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer SharedLocalizer
+<div class="container">
+    <div class="section-header">
+        <h2>@SharedLocalizer["Event Speaker"]</h2>
+        <p>@SharedLocalizer["Tất cả diễn giả của chương trình"]</p>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="speaker">
+                    <img src="~/images/@item.ImageUrl" alt="Speaker 1" class="img-fluid">
+                    <div class="details">
+                        <h3><a href="#">@item.FullName</a></h3>
+                        <p>Diễn giả</p>
+                        <div class="social">
+                            <a href=""><i class="fa fa-twitter"></i></a>
+                            <a href=""><i class="fa fa-facebook"></i></a>
+                            <a href=""><i class="fa fa-google-plus"></i></a>
+                            <a href=""><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

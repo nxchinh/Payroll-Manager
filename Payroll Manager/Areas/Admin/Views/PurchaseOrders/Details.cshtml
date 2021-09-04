@@ -1,0 +1,133 @@
+﻿@model Payroll_Manager.Areas.Admin.Controllers.PurchaseOrdersController.PoWithItems
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+<div class="purchase">
+    <div class="row" style="padding: 10px">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-0 mb-3">Chi tiết giao dịch</h4>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <ul class="list-unstyled text-center text-muted mb-0">
+                                <li class="list-inline-item font-13"><i class="mdi mdi-album font-16 text-purple mr-4"></i>Mã giao dịch: @Html.DisplayFor(model => model.PurchaseOrder.MaGiaoDich)</li>
+                                <li class="list-inline-item font-13"><i class="mdi mdi-album font-16 text-pink mr-2"></i>Ngày giao dịch: @Html.DisplayFor(model => model.PurchaseOrder.DateStr)</li>
+                                <li class="list-inline-item font-13"><i class="mdi mdi-album font-16 text-success mr-2"></i>Tổng tiền: @Model.PurchaseOrder.TotalPrice.ToString("N0") VNĐ</li>
+                                <li class="list-inline-item font-13">
+                                    <i class="mdi mdi-album font-16 text-success mr-2">
+                                        Số lượng bán: @Html.DisplayFor(model => model.PurchaseOrder.SLBan)
+                                    </i>
+                                </li>
+                                <li class="list-inline-item font-13">
+                                    <i class="mdi mdi-album font-16 text-success mr-2"></i>
+                                    <div>
+                                        @if ((!(Model.ItemList.Any())) || ((Model.ItemList.Any()) && (Model.ItemList.First().Received == 0)))
+                                        {
+                                            @Html.ActionLink("Cancel Purchase Order", "Cancel", "PurchaseOrders", new { id = Model.PurchaseOrder.PurchaseOrderId }, new {@class= "btn btn-outline-primary px-3"})
+                                        }
+                                    </div>
+                                </li>
+                                <li class="list-inline-item font-13">
+                                    <i class="mdi mdi-album font-16 text-success mr-2"></i>
+                                    <div>
+                                        @if ((Model.ItemList.Any()) && (Model.ItemList.First().Received == 0))
+                                        {
+                                            @Html.ActionLink("Receive Purchase Order", "Receive", "PurchaseOrders", new { id = Model.PurchaseOrder.PurchaseOrderId },new {@class= "btn btn-outline-primary px-3"})
+                                        }
+                                    </div>
+                                </li>
+                                <li class="list-inline-item font-13">
+                                    <i class="mdi mdi-album font-16 text-success mr-2"></i>
+                                    <div>
+                                        @if (!(Model.ItemList.Any()) || Model.ItemList.First().Received == 0)
+                                        {
+                                            @Html.ActionLink("Add Item", "Create", "PurchaseOrderItems", new { Area = "Admin" },new {@class= "btn btn-outline-primary px-3"})
+                                        }
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div><!--end col-->
+                        <div class="col-lg-8">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>
+                                                Mã Sản Phẩm
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <th>
+                                                Giá
+                                            </th>
+                                            <th>
+                                                Số Lượng
+                                            </th>
+                                            <th>
+                                                Tổng tiền
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model.ItemList)
+                                        {
+                                        <tr class="mytable">
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Inventory.ProductId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Inventory.Name)
+                                            </td>
+                                            <td class="StockAsk">
+                                                @String.Format(info, "{0:c}", item.Inventory.NetPrice)
+                                            </td>
+                                            <td class="StockQuantity">
+                                                @Html.DisplayFor(modelItem => item.Quantity)
+                                            </td>
+                                            <td class="StockPrice">
+                                                @String.Format(info, "{0:c}", item.TotalPrice)
+
+                                            </td>
+
+                                            <td class="border-top-0">
+                                                @if ((item.Received == 0))
+                                                {
+                                                    @Html.ActionLink("Cancel Item", "Cancel", "PurchaseOrderItems", new { id = item.PoItemId }, new {@class= "btn btn-outline-primary px-3"})
+                                                }
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table> <!--end row-->
+                            </div><!--end table-responsive-->
+                        </div><!--end col-->
+                    </div><!--end row-->
+
+                </div><!--end card-body-->
+                <a style="margin: 10px;" type="button" href="~/Admin/PurchaseOrders/PurchaseOrderHome" class="btn btn-gradient-primary">Trở về menu</a>
+            </div><!--end card-->
+        </div><!--end col-->
+
+    </div><!--end row-->
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#mytable tr').each(function () {
+                
+            var val1 = +$('.StockAsk', this).test();
+            var val2 = +$('.StockQuantity', this).val();
+            var total = val1 * val2;
+        });
+        $('.StockPrice').text(total);
+    });
+</script>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

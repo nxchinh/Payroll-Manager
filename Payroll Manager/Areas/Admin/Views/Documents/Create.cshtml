@@ -1,0 +1,82 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Document.DocumentViewModel
+
+@{ ViewData["Title"] = "Thêm tài liệu công việc"; }
+@section Styles{
+    <link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+}
+<div class="row" style="padding: 15px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="card-title">Thêm tài liệu công việc</div>
+                <a asp-action="List" class="btn mr-2 mb-2 btn-primary">
+                    Danh sách tài liệu
+                </a>
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Number" class="control-label"></label>
+                        <input asp-for="Number" class="form-control" />
+                        <span asp-validation-for="Number" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Date" class="control-label"></label>
+                        <input asp-for="Date" class="form-control" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SeeBefore" class="control-label"></label>
+                        <input asp-for="SeeBefore" class="form-control" />
+                        <span asp-validation-for="SeeBefore" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Caption" class="control-label"></label>
+                        <input asp-for="Caption" class="form-control" />
+                        <span asp-validation-for="Caption" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Note" class="control-label"></label>
+                        <textarea asp-for="Note" class="form-control"></textarea>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" asp-for="Files" multiple>
+                            <label class="custom-file-label" asp-for="Files">Chọn File</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Xác nhận" class="btn btn-primary" /> |
+                        <a asp-action="List">Danh sách tài liệu</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+    $(".custom-file-input").on("change", function (e) {
+            let filenames = [];
+            let files = e.target.files;
+            if (files.length > 1) {
+                filenames.push("File (" + files.length + ")");
+            } else {
+                for (let i in files) {
+                    if (files.hasOwnProperty(i)) {
+                        filenames.push(files[i].name);
+                    }
+                }
+            }
+            $(this).siblings(".custom-file-label").addClass("selected").html(filenames.join(","));
+        });
+
+        $("#openList").click(function () {
+            $("#list").show();
+        });
+        $("#closeList").click(function () {
+            $("#list").hide();
+        });</script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

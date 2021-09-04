@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "Phân tích tìm kiếm";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<div class="main-card mb-3 card" style="padding: 10px;margin: 10px;">
+    <div class="card-body">
+        <div class="card-title">Phân tích tìm kiếm</div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label" for="title">Keywords to search</label>
+                    <input id="Keywords" type="text" class="form-control" placeholder="Nhập từ khóa tìm kiếm ...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="message">Url tag count</label>
+                    <input id="UrlTag" type="text" class="form-control" placeholder="Nhập tag ...">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-success" id="new">Nhận kết quả</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="Result" class="card-footer d-block clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+              (function () {
+                  debugger;
+                  document.getElementById('new').addEventListener('click', () => {
+                      var key = document.getElementById('Keywords').value;
+                      var urltag = document.getElementById('UrlTag').value;
+                      fetch('/' + key + '/' + urltag, 
+                              {
+                                  method: 'get',
+                                  headers: {
+                                      'Content-Type': 'application/json',
+                                      'Accept': 'application/json',
+                                  }
+                              })
+                          .then(res => res.json())
+                          .then((result) => {
+                              var htmlInput = result.reduce(function (allhtml, item) {
+                                  allhtml = allhtml + "<div class='form-group'><label class='form-label'>Kết quả tìm kiếm của: " + item.searchEngine + " Thời gian: " + item.date + "</label><br />" + " Result: <p class='text-primary'>"+ item.results +"</p></div>";
+                                  return allhtml + "<div></div>";
+                              }, "");
+                              document.getElementById('Result').innerHTML = htmlInput;
+                          });
+                  });
+              })();
+          </script>

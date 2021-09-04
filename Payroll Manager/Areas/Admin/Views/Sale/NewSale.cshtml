@@ -1,0 +1,57 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Sale.SaleCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href="/css/Animated.css" rel="stylesheet" type="text/css" />
+<link href="/css/Employee.css" rel="stylesheet" type="text/css" />
+<div class="animated fadeIn employee">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-action="Index">Sale List</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">New Sale</li>
+                    </ol>
+                </nav>
+                <br />
+                <br />
+                <div class="title"><span><a href="#">Thêm danh sách bán hàng</a></span></div>
+                <div style='text-align:right;'>
+                    @Html.ActionLink("Thêm/Tìm kiếm khách hàng", "Index", "Customer",null, new { @class = "mb-2 mr-2 btn btn-warning" })
+                </div>
+                <form method="post" asp-action="NewSale" asp-controller="Sale" asp-area="Admin">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="position-relative form-group">
+                        <label asp-for="EmployeeId"></label>
+                        @Html.DropDownList("EmployeeId", (IEnumerable<SelectListItem>)ViewBag.EmployeeID, "Chọn nhân viên", htmlAttributes: new { @class = "form-control" })
+                        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                    </div>
+                    <div class="position-relative form-group">
+                        <label asp-for="CustomerId" class=""></label>
+                        @Html.DropDownList("CustomerId", (IEnumerable<SelectListItem>)ViewBag.CustomerID, "Chọn khách hàng cần giao dịch", htmlAttributes: new { @class = "form-control" })
+                        <span asp-validation-for="CustomerId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <br />
+
+                    <div class="form-group">
+
+                        <button type="submit" class="mt-1 btn btn-primary float-left"><i class="fas fa-plus-square" style="margin-right: 0.7em"></i>Save</button>
+                        <a asp-action="index" class="mt-1 btn btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right: 0.7em"></i>Back</a>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

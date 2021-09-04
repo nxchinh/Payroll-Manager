@@ -1,0 +1,225 @@
+﻿@model Payroll_Manager.Areas.Admin.Models.VM_Document.ListViewModel
+@using Microsoft.AspNetCore.Identity
+@using Payroll_Manager.Utilities
+@using Payroll_Manager.Infrastructure
+@addTagHelper *, Payroll_Manager
+@inject UserManager<Payroll_Manager.Persistence.ApplicationUser> _userManager
+
+@{ ViewData["Title"] = "File công việc"; }
+@section Styles{
+    <link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+    <style>
+        #hello div {
+            float: left;
+            clear: none;
+        }
+
+
+    </style>
+}
+<div class="row" style="padding: 15px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="card-title">Tổng hợp</div>
+                <div id="hello">
+                    <div id="chartContainer1" style="height: 360px; width: 48%; color: aliceblue;"></div>
+                    <div style="height: 360px; width: 4%;"></div>
+                    <div id="chartContainer3" style="height: 360px; width: 48%;"></div>
+                    <div style="height: 40px; width: 100%;"></div>
+                    <div id="chartContainer2" style="height: 360px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding: 15px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="card-title">File Công Việc</div>
+                @if (User.IsInRole(SD.Admin.ToString()))
+                {
+    <a asp-action="Create" class="btn mr-2 mb-2 btn-primary">
+        Tạo File Công việc
+    </a>}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mã</th>
+                                <th scope="col">Tên</th>
+                                <th scope="col">Thời gian tạo</th>
+                                <th scope="col">Thời gian kết thúc</th>
+                                <th scope="col">Lấy tài liệu</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var doc in Model.Documents.OrderByDescending(x => x.CreatedAt))
+                            {
+                <tr>
+                    <td class="align-middle">
+                        @($"№ : {doc.Number} -Time: {doc.Date:dd.MM.yyyy}")
+                    </td>
+                    <td class="align-middle">
+                        @doc.Caption
+                        <br />
+                        <span class="badge badge-danger badge-pill" state-acq-for="@doc.Id"></span>
+                    </td>
+                    <td class="align-middle">
+                        @doc.CreatedAt
+                    </td>
+                    <td class="align-middle">
+                        @doc.SeeBefore
+                    </td>
+                    <td class="align-middle">
+                        <span class="badge badge-primary badge-pill" count-acq-for="@doc.Id">0</span>
+                    </td>
+                    <td class="align-middle">
+                        <a class="btn btn-info m-1" asp-action="Details" asp-route-id="@doc.Id">Chi tiết tài liệu</a>
+                        @if (User.IsInRole(SD.Admin.ToString()))
+                        {
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@doc.Id">Xóa tài liệu</a>}
+                    </td>
+                </tr>
+}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(".custom-file-input").on("change", function (e) {
+            var filenames = [];
+            var files = e.target.files;
+            if (files.length > 1) {
+                filenames.push("Đã chọn (" + files.length + ")");
+            } else {
+                for (let i in files) {
+                    if (files.hasOwnProperty(i)) {
+                        filenames.push(files[i].name);
+                    }
+                }
+            }
+            $(this).siblings(".custom-file-label").addClass("selected").html(filenames.join(","));
+        });
+
+        $("#openList").click(function () {
+            $("#list").show();
+        });
+        $("#closeList").click(function () {
+            $("#list").hide();
+        });
+
+    </script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script>
+
+
+        //---- data pints for chart 3
+
+        var result = @Html.Raw(ViewBag.DataPoints);
+	        var dataPoints =[];
+	        for(var i = 0; i < result.length; i++){
+                dataPoints.push({ label: result[i].Name, y: result[i].Count});
+	        }
+
+                   window.onload = function () {
+                        //-------- Chart 1 ---------------
+                        var chart1 = new CanvasJS.Chart("chartContainer1", {
+                title: {
+                            text: "Số liệu"
+                },
+                animationEnabled: true,
+                legend: {
+                            verticalAlign: "center",
+                    horizontalAlign: "left",
+                    fontSize: 20,
+                    fontFamily: "Helvetica"
+                },
+                theme: "theme2",
+                data: [
+                                 {
+                            type: "pie",
+                        indexLabelFontFamily: "Garamond",
+                        indexLabelFontSize: 20,
+                        indexLabel: "{label} {y}%",
+                        startAngle: -20,
+                        showInLegend: true,
+                        toolTipContent: "{legendText} {y}%",
+                        dataPoints: [
+                            { y: @ViewBag.employeeRating, legendText: "Số tài liệu đã làm", label: "Số tài liệu đã làm" },
+                            { y: (100-@ViewBag.employeeRating), legendText: "Còn lại" },
+
+                        ]
+                    }
+                ]
+            });
+                    chart1.render();
+
+                    //-------- Chart 2 ---------------
+                    var chart2 = new CanvasJS.Chart("chartContainer2", {
+                theme: "theme2",
+                animationEnabled: true,
+                title: {
+                        text: "Overview"
+                },
+                data: [
+                    {
+                        type: "column",
+                        dataPoints: [
+                            { y: 19, label: "Word" },
+                            { y: 4, label: "Excel" },
+                            { y: 2, label: "PPT" },
+                            { y: 5, label: "Outlook" },
+                            { y: 2, label: "PDF" },
+                            { y: 3, label: "MP3" },
+                            { y: 4, label: "MP4" },
+                            { y: 3, label: "SQL" }
+                        ]
+                    }
+                ]
+            });
+
+            chart2.render();
+
+           //----chart 3-------
+
+            var chart3 = new CanvasJS.Chart("chartContainer3", {
+                theme: "theme2",
+                animationEnabled: true,
+                title: {
+                    text: "Biểu đồ số lượng",
+                    fontSize: 25
+                },
+                axisX: {
+                    valueFormatString: "MMM",
+                    interval: 1,
+                    intervalType: "month"
+
+                },
+                axisY: {
+                    title: "Số lượng bài"
+                },
+
+                data: [
+                    {
+                        type: "area",
+                        dataPoints: dataPoints,
+                    }
+                ]
+            });
+
+            chart3.render();
+                       $(".canvasjs-chart-credit").remove();
+            };
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿
+@model IEnumerable<Payroll_Manager.Entity.Company>
+
+@{ ViewData["Title"] = "Công ty"; }
+@section Styles{
+    <link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+}
+<div class="row" style="padding: 15px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="card-title">Công ty</div>
+                <a asp-action="Create" class="btn mr-2 mb-2 btn-primary">
+                    Tạo công ty
+                </a>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Tên công ty </th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            @foreach (var item in Model.OrderBy(x => x.Name))
+                            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Sửa</a> |
+                        <a class="btn btn-outline-danger delete"
+                           asp-action="Delete" asp-route-id="@item.Id">
+                            Xóa
+                        </a>
+                    </td>
+                </tr>
+}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+}

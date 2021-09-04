@@ -1,0 +1,285 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Payroll_Manager.Utilities
+@inject UserManager<Payroll_Manager.Persistence.ApplicationUser> _userManager
+
+    <ul class="vertical-nav-menu">
+        <li class="app-sidebar__heading">Trang chủ</li>
+        <li>
+            <a href="@Url.Action("Index", "Home")" class="mm-active">
+                <i class="metismenu-icon fas fa-rocket"></i> Phân tích
+            </a>
+        </li>
+
+        @if (User.IsInRole(SD.Admin.ToString()))
+        {
+            <li class="app-sidebar__heading">Tài khoản</li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg "></i> Quản lý tài khoản
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="Adminstrator" asp-action="ListRoles">
+                            <i class="metismenu-icon">
+                            </i> Phân quyền
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="Registration">
+                            <i class="metismenu-icon">
+                            </i> Thêm tài khoản nhân viên
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(SD.Hr.ToString()) || User.IsInRole(SD.Admin.ToString()))
+        {
+            <li class="app-sidebar__heading">Hệ thống</li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg"></i> Địa chỉ
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="Address" asp-action="Add">
+                            <i class="metismenu-icon"></i> Thêm địa chỉ
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Address" asp-action="Index">
+                            <i class="metismenu-icon"></i> Tất cả địa chỉ
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg "></i> Chi nhánh Công ty
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="Company" asp-action="List">
+                            <i class="metismenu-icon">
+                            </i> Danh sách chi nhánh
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg "></i> Bộ phân trong công ty
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="Department" asp-action="List">
+                            <i class="metismenu-icon">
+                            </i> Danh sách bộ phận
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg"></i> Nhân viên
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="Employee" asp-action="Create">
+                            <i class="metismenu-icon"></i> Thêm nhân viên
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Employee" asp-action="Index">
+                            <i class="metismenu-icon"></i> Tất cả nhân viên
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Employee" asp-action="SearchView">
+                            <i class="metismenu-icon"></i> Search nhân viên
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(SD.Payroll.ToString()) || User.IsInRole(SD.Admin.ToString()))
+        {
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg "></i> Tính lương
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="Pay" asp-action="Create">
+                            <i class="metismenu-icon">
+                            </i> Tính lương nhân viên
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Pay" asp-action="Index">
+                            <i class="metismenu-icon">
+                            </i> Giao dịch lương
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(SD.Payroll.ToString()) || User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()) || User.IsInRole(SD.Worker.ToString()))
+        {
+            <li class="app-sidebar__heading">Tài liệu</li>
+            @if (User.IsInRole(SD.Admin.ToString()))
+            {
+                <li>
+                    <a href="#">
+                        <i class="metismenu-icon fas fa-rocket fa-lg "></i> Tài liệu công ty
+                        <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a asp-controller="File" asp-action="Index">
+                                <i class="metismenu-icon">
+                                </i> Danh sách tài liệu
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg "></i> Tài liệu nhân viên
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="Documents" asp-action="List">
+                            <i class="metismenu-icon">
+                            </i> Danh sách tài liệu
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()))
+        {
+            <li class="app-sidebar__heading">Sự kiện</li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg "></i> Sự kiện
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="Event" asp-action="Index">
+                            <i class="metismenu-icon">
+                            </i> Danh sách sự kiện
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rocket fa-lg "></i> Hình ảnh Sự kiện
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-controller="EventImage" asp-action="Index">
+                            <i class="metismenu-icon">
+                            </i> Danh sách hình ảnh sự kiện
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()) || User.IsInRole(SD.Worker.ToString()))
+        {
+            <li class="app-sidebar__heading">Giao dịch Online và Offline</li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fab fa-amazon-pay"></i> Sản Phẩm (Event)
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()))
+                    {
+                        <li>
+                            <a asp-controller="Categories" asp-action="Index">
+                                <i class="metismenu-icon">
+                                </i> Loại
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Inventory" asp-action="Products">
+                                <i class="metismenu-icon">
+                                </i> Quản lý sản phẩm (Event)
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()) || User.IsInRole(SD.Worker.ToString()))
+                    {
+                        <li>
+                            <a asp-controller="PurchaseOrders" asp-action="PurchaseOrderHome">
+                                <i class="metismenu-icon">
+                                </i> Giao dịch chi trả
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fab fa-android"></i> Sales
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()) || User.IsInRole(SD.Worker.ToString()))
+                    {
+                        <li>
+                            <a asp-controller="Sale" asp-action="NewSale">
+                                <i class="metismenu-icon">
+                                </i> Create a new Sale
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Sale" asp-action="TransactionLookup">
+                                <i class="metismenu-icon">
+                                </i> Transaction Lookup
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(SD.Admin.ToString()) || User.IsInRole(SD.DepartmentHead.ToString()))
+        {
+            <li class="app-sidebar__heading">Hệ thống Khách hàng</li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon fas fa-rupee-sign"></i> Khách hàng
+                    <i class="metismenu-state-icon fas fa-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Customer" asp-action="Create">
+                            <i class="metismenu-icon"></i> Thêm khách hàng
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Customer" asp-action="Index">
+                            <i class="metismenu-icon"></i> Tất cả khách hàng
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        }
+
+    </ul>

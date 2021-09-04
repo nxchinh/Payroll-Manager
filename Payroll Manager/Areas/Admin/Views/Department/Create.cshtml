@@ -1,0 +1,49 @@
+﻿@model Payroll_Manager.Entity.Department
+
+
+@{ ViewData["Title"] = "Thêm bộ phận"; }
+@section Styles{
+    <link href="/css/purchase.css" rel="stylesheet" type="text/css" />
+}
+<div class="row" style="padding: 15px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="card-title">Bộ phận của công ty</div>
+                <a asp-action="List" class="btn mr-2 mb-2 btn-primary">
+                    Danh sách bộ phận
+                </a>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CompanyId" class="control-label"></label>
+                        @{ List<SelectListItem> listItems = new List<SelectListItem>();
+                            foreach (var item in ViewBag.Company)
+                            {
+                                listItems.Add(new SelectListItem
+                                {
+                                    Text = item.Name,
+                                    Value = item.Id.ToString()
+                                });
+                            } }
+                        <select asp-for="CompanyId" class="form-control" asp-items="listItems">
+                            <option selected="selected">Thêm công ty..</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Xác nhận" class="btn btn-outline-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+}
+
